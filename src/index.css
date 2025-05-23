@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Lato';
+}
+
+.last-cell-p {
+  padding-right: 24px !important;
+}
+
+.ant-menu-item.ant-menu-item-selected {
+  background-color: #00803C;
+}
+
+.ant-menu-submenu.ant-menu-submenu-selected,
+.ant-menu-item.ant-menu-item-selected {
+  /* font-weight: 400; */
+  color: #fff;
+}
+
+.ant-table thead tr th {
+  color: #637381 !important;
+  background-color: #fff !important;
+  font-size: 14px !important;
+}
+
+.ant-table tbody tr td {
+  color: #212B36 !important;
+}

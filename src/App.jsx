@@ -1,0 +1,66 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { BrowserRouter, Route, Routes } from "react-router"
+import MainLayout from "./layout/MainLayout"
+import { AuthProvider } from "./hooks/useAuth"
+import VehicleTypeIndex from "./pages/MasterData/VehicleType/Index"
+import UserRoleIndex from "./pages/MasterData/UserRole/Index"
+import UserRoleForm from "./pages/MasterData/UserRole/Form"
+import { ProtectedRoute } from "./components/ProtectedRoute"
+import Login from "./pages/Login"
+import Dashboard from "./pages/Dashboard/Index"
+import WorkshopMonitorIndex from "./pages/WorkshopMonitor/Index"
+import { MonitorTradeInAssignIndex } from "./pages/MonitorTradeIn/Assign/Index"
+import { MonitorTradeInProgressIndex } from "./pages/MonitorTradeIn/Progress/Index"
+import CrossSellingTire from "./pages/CrossSelling/Tire"
+import CrossSellingBatterai from "./pages/CrossSelling/Batterai"
+import CrossSellingBodyRepair from "./pages/CrossSelling/BodyRepair"
+import WorkshopMonitorDetail from "./pages/WorkshopMonitor/Form"
+import DataTrustIndex from "./pages/DataTrust/Index"
+import DataTrustDetail from "./pages/DataTrust/Detail"
+
+const queryClient = new QueryClient()
+
+function App() {
+
+  return (
+    <QueryClientProvider client={queryClient} >
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route path="/login" element={<Login/>} />
+            <Route path="/" element={<ProtectedRoute><MainLayout/></ProtectedRoute>} >
+              <Route index element={<Dashboard/>} />
+              <Route path="master-data" >
+                <Route path="vehicle-type" element={<VehicleTypeIndex/>} />
+                <Route path="user-role">
+                  <Route index element={<UserRoleIndex/>} />
+                  <Route path="create" element={<UserRoleForm/>} />
+                  <Route path="detail/:id" element={<UserRoleForm/>} />
+                </Route>
+              </Route>
+              <Route path="monitor-tradein" >
+                <Route path="assign" element={<MonitorTradeInAssignIndex/>} />
+                <Route path="progress" element={<MonitorTradeInProgressIndex/>} />
+              </Route>
+              <Route path="cross-selling" >
+                <Route path="tire" element={<CrossSellingTire/>} />
+                <Route path="batterai" element={<CrossSellingBatterai/>} />
+                <Route path="body-repair" element={<CrossSellingBodyRepair/>} />
+              </Route>
+              <Route path="workshop-monitor" >
+                <Route index element={<WorkshopMonitorIndex/>} />
+                <Route path="detail/:id" element={<WorkshopMonitorDetail/>} />
+              </Route>
+              <Route path="data-trust" >
+                <Route index element={<DataTrustIndex/>} />
+                <Route path="detail/:id" element={<DataTrustDetail/>} />
+              </Route>
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
+  )
+}
+
+export default App
