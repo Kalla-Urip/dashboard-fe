@@ -3,9 +3,9 @@ import useDebounce from "../../hooks/useDebounce";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Card, Flex, Input, Pagination, Select, Table, Typography } from "antd";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { tradeInService } from "../../services/tradeIn.service";
 import { useTableHeight } from "../../hooks/useTableHeight";
 import { useNavigate } from "react-router";
+import { trustService } from "../../services/trust.service";
 
 export default function DataTrustIndex(){
 
@@ -24,7 +24,7 @@ export default function DataTrustIndex(){
 
   const { data: tradeInData , isLoading, isRefetching } = useQuery({
     queryKey: ['tradein', dataParams],
-    queryFn: () => tradeInService.getDataTrust(dataParams),
+    queryFn: () => trustService.fetchAll(dataParams),
     placeholderData: keepPreviousData,
   })
 

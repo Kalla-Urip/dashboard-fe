@@ -53,10 +53,10 @@ export default function KacabUI(){
         </Col>
         <Col span={8} >
           <DashboardCard
-          title="Total Trust"
-          value="32"
-          icon="hugeicons:arrow-data-transfer-horizontal"
-          />
+            title="Total Trust"
+            value="32"
+            icon="hugeicons:arrow-data-transfer-horizontal"
+            />
         </Col>
         <Col span={8} >
           <DashboardCard

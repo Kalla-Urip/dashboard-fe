@@ -13,7 +13,7 @@ const renderBadge = status => {
   if(status == 'Berhasil')
     return <Tag color={'green'} >Berhasil</Tag>
   if(status == 'Gagal')
-    return <Tag color={'red'} >Gagal</Tag>
+    return <Tag color={'red'} >Berhasil</Tag>
   return <Tag color={'cyan'} >Sedang Diproses</Tag>
 }
 
@@ -164,17 +164,14 @@ export function KacabUI(){
             },
             {
               title: 'Tipe & Tahun',
-              width: 150,
               render: val => `${val.type} - ${val.year}`
             },
             {
               title: 'Tanggal Diajukan',
               dataIndex: 'createdAt',
-              width: 150,
             },
             {
               title: 'Status SPV',
-              width: 150,
               render: record => (
                 <>
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
@@ -193,7 +190,6 @@ export function KacabUI(){
             },
             {
               title: 'Status Trust',
-              width: 150,
               render: record => (
                 <>
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
@@ -213,7 +209,7 @@ export function KacabUI(){
             {
               className: 'last-cell-p',
               title: 'Aksi',
-              width: 150,
+              width: 110,
               fixed: 'right',
               render: record => (
                 <Flex gap={10} >

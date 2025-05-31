@@ -1,29 +1,19 @@
-import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Badge, Button, Card, Descriptions, Drawer, Flex, Form, Input, message, Pagination, Select, Table, Tag, Typography } from "antd";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { Button, Card, Flex, Input, Pagination, Select, Table, Tag, Typography } from "antd";
 import { useEffect, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import { tradeInService } from "../../../services/tradeIn.service";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { userService } from "../../../services/user.service";
-import RenderIf from "../../../components/RenderIf";
 import { useTableHeight } from "../../../hooks/useTableHeight";
+import { useNavigate } from "react-router";
 
 export function SpvTrustUI(){
 
-  const [form] = Form.useForm()
-
-  const queryClient = useQueryClient()
-
-  const [messageApi, contextHolder] = message.useMessage();
+  const navigate = useNavigate()
   const tableHeight = useTableHeight()
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 500);
   const [source, setSource] = useState('')
-  const [drawerOpt, setDrawerOpt] = useState({
-    action: null,
-    id: null,
-    open: false
-  })
   const [dataParams, setDataParams] = useState({
     limit: 10,
     page: 1,
@@ -41,37 +31,8 @@ export function SpvTrustUI(){
 
   const { data: tradeInData , isLoading, isRefetching } = useQuery({
     queryKey: ['tradein', dataParams],
-    queryFn: () => tradeInService.getProgressData(dataParams),
+    queryFn: () => tradeInService.getFinishData(dataParams),
     placeholderData: keepPreviousData,
-  })
-
-  const { data: detailTradeIn } = useQuery({
-    queryKey: ['tradein', drawerOpt.id],
-    queryFn: () => tradeInService.getProgressDataById(drawerOpt.id),
-    enabled: !!drawerOpt.id
-  })
-
-  useEffect(() => {
-    if(drawerOpt.open && drawerOpt.action == 'Edit'){
-      form.setFieldsValue(detailTradeIn?.data)
-    }
-  }, [detailTradeIn?.data, drawerOpt, form])
-
-  const { data: trustData } = useQuery({
-    queryKey: ['trust-user'],
-    queryFn: () => userService.getTrust(),
-  })
-
-  const assignMutation = useMutation({
-    mutationFn: val => tradeInService.assignTrust({ id: drawerOpt?.id, ...val }),
-    onSuccess: () => {
-      queryClient.invalidateQueries('tradein')
-      handleCloseDrawer()
-      messageApi.success("Assign data berhasil")
-    },
-    onError: () => {
-      messageApi.error("Terjadi Kesalahan")
-    },
   })
 
   const pagination = tradeInData?.pagination || { total: 0, page: 1 };
@@ -84,14 +45,8 @@ export function SpvTrustUI(){
     })
   }
 
-  const handleCloseDrawer = () => {
-    form.resetFields()
-    setDrawerOpt({ open: false, data: null })
-  }
-
   return (
     <>
-      {contextHolder}
       <Card>
         <Flex gap={20} style={{ marginBottom: 20 }} >
           <Input
@@ -105,6 +60,13 @@ export function SpvTrustUI(){
             }
             onChange={e => setKeyword(e.target.value)}
             value={keyword}
+          />
+          <Select
+            placeholder="Status"
+            style={{ width: 180 }}
+            options={['Berhasil', 'Gagal'].map(e => ({ label: e, value: e }))}
+            allowClear
+            onChange={(e) => setDataParams({ ...dataParams, status: e })}
           />
           <Select
             placeholder="Sumber"
@@ -124,7 +86,7 @@ export function SpvTrustUI(){
             {
               title: 'No',
               align: 'center',
-              width: 80,
+              width: 40,
               fixed: 'left',
               render: (text, record, index) =>  index + 1,
             },
@@ -150,21 +112,24 @@ export function SpvTrustUI(){
             },
             {
               title: 'Tipe & Tahun',
-              render: val => `${val.type} - ${val.year}`
+              render: val => `${val.type} - ${val.year}`,
+              width: 180
             },
             {
               title: 'Tanggal Diajukan',
               dataIndex: 'createdAt',
+              width: 150
             },
             {
               title: 'Status Trust',
+              width: 120,
               render: record => (
                 <>
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
                     {record.trustName}
                   </Typography.Text>
-                  <Tag color="cyan" style={{ marginTop: 5 }}  >
-                    Sedang Diproses
+                  <Tag color={record.trustStatus == 'Berhasil' ? "green" : 'red'} style={{ marginTop: 5 }}  >
+                    {record.trustStatus}
                   </Tag>
                 </>
               )
@@ -172,14 +137,11 @@ export function SpvTrustUI(){
             {
               className: 'last-cell-p',
               title: 'Aksi',
-              width: 110,
+              width: 90,
               fixed: 'right',
               render: record => (
                 <Flex gap={10} >
-                  <Button onClick={() => setDrawerOpt({ id: record.id, open: true, action: 'Edit' })} variant="solid" style={{ backgroundColor: '#30B0C7', color: '#fff' }} >
-                    Edit
-                  </Button>
-                  <Button onClick={() => setDrawerOpt({  id: record.id, open: true, action: 'Detail' })} type="primary" >
+                  <Button onClick={() => navigate('/monitor-tradein/history/detail/'+record.id)} type="primary" >
                     Detail
                   </Button>
                 </Flex>
@@ -200,61 +162,6 @@ export function SpvTrustUI(){
           onChange={handleChangePage}
         />
       </Card>
-      <Drawer
-        open={drawerOpt.open}
-        title={drawerOpt.action != 'Detail' ? "Edit" : "Detail Progress"}
-        onClose={handleCloseDrawer}
-        footer={
-          drawerOpt.action != 'Detail'
-          &&
-          <Button onClick={form.submit} block type="primary" >
-            Assign
-          </Button>
-        }
-      >
-        <Descriptions
-          bordered
-          layout="vertical"
-          size="small"
-          column={1}
-          style={{ marginBottom: 20 }}
-          items={[
-            {
-              label: 'Sumber',
-              children: <Typography.Text style={{ color: detailTradeIn?.data?.source == 'Service' ? '#009E43' : '#FA9B25' }} >{detailTradeIn?.data?.source}</Typography.Text>
-            },
-            {
-              label: 'No Plat',
-              children: detailTradeIn?.data?.plateNumber
-            },
-            {
-              label: 'Nama',
-              children: detailTradeIn?.data?.ownerName
-            },
-            {
-              label: 'Tanggal Diajukan',
-              children: detailTradeIn?.data?.createdAt
-            },
-            {
-              label: 'Trust',
-              children: detailTradeIn?.data?.trustName
-            },
-          ]}
-        />
-        <RenderIf when={drawerOpt.action != 'Detail'} >
-          <Form 
-            form={form}
-            layout="vertical" 
-            onFinish={assignMutation.mutate}
-          >
-            <Form.Item name={'trustId'} rules={[{ required: true }]} label="Trust" >
-              <Select
-                options={trustData?.data?.map(e => ({ label: e.name, value: e.id }))}
-              />
-            </Form.Item>
-          </Form>
-        </RenderIf>
-      </Drawer>
     </>
   )
 }

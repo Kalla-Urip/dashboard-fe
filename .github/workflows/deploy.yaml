@@ -1,0 +1,68 @@
+name: Deploy Main Api Service
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  SSH_PRIVATE_KEY : ${{ secrets.SSH_PRIVATE_KEY }}
+  SSH_HOST        : ${{ secrets.SSH_HOST }}
+  SSH_USER        : ${{ secrets.SSH_USER }}
+  PORT_APP        : ${{ vars.PORT_APP }}
+  PORT_APP_HOST   : ${{ vars.PORT_APP_HOST }}
+  REPO_NAME       : ${{ github.event.repository.name }}
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ env.REPO_NAME }}:latest .
+
+    - name: Save Docker image to tar.gz
+      run: |
+        docker save ${{ env.REPO_NAME }}:latest | gzip > ${{ env.REPO_NAME }}.tar.gz
+
+    - name: Transfer Docker image to server via SCP
+      run: |
+        echo "${{ env.SSH_PRIVATE_KEY }}" > private_key.pem
+        chmod 600 private_key.pem
+        scp -o StrictHostKeyChecking=no -i private_key.pem ${{ env.REPO_NAME }}.tar.gz ${{ env.SSH_USER }}@${{ env.SSH_HOST }}:/tmp/${{ env.REPO_NAME }}.tar.gz
+
+    - name: Extract and deploy on the server
+      run: |
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ env.SSH_USER }}@${{ env.SSH_HOST }} << 'EOF'
+          # Extract the Docker image
+          gzip -d /tmp/${{ env.REPO_NAME }}.tar.gz
+          docker load < /tmp/${{ env.REPO_NAME }}.tar
+
+          # Stop and remove the running container if it exists
+          CONTAINER_ID=$(docker ps -a -q --filter "name=${{ env.REPO_NAME }}")
+          if [ -n "$CONTAINER_ID" ]; then
+            echo "Removing existing container..."
+            docker rm -f ${{ env.REPO_NAME }}
+          fi
+
+          # Run a new container from the loaded image
+          docker run -d --restart always --name ${{ env.REPO_NAME }} -e VITE_BASE_URL=${{ secrets.API_BASE_URL }} -p ${{ vars.PORT_APP_HOST }}:${{ vars.PORT_APP }} ${{ env.REPO_NAME }}:latest
+
+          # Clean up unused docker images
+          docker rmi $(docker images -q)
+
+          # Clean up the tar file
+          rm -f /tmp/${{ env.REPO_NAME }}.tar
+        EOF
+
+    - name: Cleanup local tar.gz
+      run: |
+        rm -f ${{ env.REPO_NAME }}.tar.gz

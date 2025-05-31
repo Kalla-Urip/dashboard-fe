@@ -173,7 +173,7 @@ export default function VehicleTypeIndex(){
         onClose={handleCloseDrawer}
         footer={
           <Flex gap={20} >
-            <Button block type="primary" >
+            <Button block onClick={() => form.submit()} type="primary" >
               Simpan
             </Button>
             <Button onClick={handleCloseDrawer} block variant="filled" color="danger" >

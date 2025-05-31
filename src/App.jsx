@@ -17,6 +17,8 @@ import CrossSellingBodyRepair from "./pages/CrossSelling/BodyRepair"
 import WorkshopMonitorDetail from "./pages/WorkshopMonitor/Form"
 import DataTrustIndex from "./pages/DataTrust/Index"
 import DataTrustDetail from "./pages/DataTrust/Detail"
+import { MonitorTradeInFinishIndex } from "./pages/MonitorTradeIn/History/Index"
+import MonitorTradeInFinishDetail from "./pages/MonitorTradeIn/History/Detail"
 
 const queryClient = new QueryClient()
 
@@ -41,6 +43,11 @@ function App() {
               <Route path="monitor-tradein" >
                 <Route path="assign" element={<MonitorTradeInAssignIndex/>} />
                 <Route path="progress" element={<MonitorTradeInProgressIndex/>} />
+                <Route path="history">
+                  <Route index element={<MonitorTradeInFinishIndex/>} />
+                  <Route path="detail/:id" element={<MonitorTradeInFinishDetail/>} />
+                </Route>
+
               </Route>
               <Route path="cross-selling" >
                 <Route path="tire" element={<CrossSellingTire/>} />

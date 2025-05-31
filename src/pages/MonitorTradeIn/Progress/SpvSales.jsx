@@ -1,11 +1,12 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Badge, Button, Card, Descriptions, Drawer, Flex, Form, Input, message, Pagination, Select, Table, Tag, Typography } from "antd";
+import { Button, Card, Descriptions, Drawer, Flex, Form, Input, message, Pagination, Select, Table, Tag, Typography } from "antd";
 import { useEffect, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import { tradeInService } from "../../../services/tradeIn.service";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { userService } from "../../../services/user.service";
 import RenderIf from "../../../components/RenderIf";
+import { useTableHeight } from "../../../hooks/useTableHeight";
 
 export function SpvSalesUI(){
 
@@ -14,6 +15,7 @@ export function SpvSalesUI(){
   const queryClient = useQueryClient()
 
   const [messageApi, contextHolder] = message.useMessage();
+  const tableHeight = useTableHeight()
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 500);
   const [source, setSource] = useState('')
@@ -116,6 +118,7 @@ export function SpvSalesUI(){
           size="small"
           pagination={false}
           dataSource={tradeInData?.data}
+          scroll={{ y: tableHeight }}
           loading={isLoading || isRefetching}
           columns={[
             {

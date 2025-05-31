@@ -24,6 +24,7 @@ const mechanicMenu = () =>  [
 const branchManagerMenu = collapse => [
   {
     key: "workshop-monitor",
+    allowedRoles: ['Super Admin', 'SPV Trust'],
     label: <Link to={'/workshop-monitor'} >Monitor Bengkel</Link>,
     icon: (
       <Icon
@@ -38,6 +39,7 @@ const branchManagerMenu = collapse => [
     key: "cross-selling",
     label: "Cross Selling",
     permission: 'Monitor Trade In',
+    allowedRoles: ['Super Admin'],
     icon: (
       <Icon
         icon="hugeicons:tire"
@@ -68,6 +70,7 @@ const branchManagerMenu = collapse => [
     key: "monitor-tradein",
     label: "Monitor Trade In",
     permission: 'Monitor Trade In',
+    allowedRoles: ['Super Admin', 'SPV Trust', 'SPV Sales'],
     icon: (
       <Icon
         icon="hugeicons:arrow-up-down"
@@ -98,6 +101,7 @@ const branchManagerMenu = collapse => [
     key: "monitor-cr",
     label: "Monitor CR",
     permission: 'Monitor CR',
+    allowedRoles: ['Super Admin'],
     icon: (
       <Icon
         icon="hugeicons:user-group"
@@ -126,6 +130,7 @@ const branchManagerMenu = collapse => [
   },
   {
     key: "data-sales",
+    allowedRoles: ['Super Admin', 'SPV Sales'],
     label: <Link to={'/data-sales'} >Data Sales</Link>,
     icon: (
       <Icon
@@ -138,6 +143,7 @@ const branchManagerMenu = collapse => [
   },
   {
     key: "data-trust",
+    allowedRoles: ['Super Admin', 'SPV Trust'],
     label: <Link to={'/data-trust'} >Data Trust</Link>,
     icon: (
       <Icon
@@ -150,6 +156,7 @@ const branchManagerMenu = collapse => [
   },
   {
     key: "customer-rating",
+    allowedRoles: ['Super Admin'],
     label: <Link to={'/customer-rating'} >Penilaian Kustomer</Link>,
     icon: (
       <Icon
@@ -162,6 +169,7 @@ const branchManagerMenu = collapse => [
   },
   {
     key: "vehicle-database",
+    allowedRoles: ['Super Admin', 'SPV Trust'],
     label: <Link to={'/vehicle-database'} >Database Kendaraan</Link>,
     icon: (
       <Icon
@@ -176,6 +184,7 @@ const branchManagerMenu = collapse => [
     key: "master-data",
     label: "Master Data",
     permission: 'Master Data',
+    allowedRoles: ['Super Admin'],
     icon: (
       <Icon
         icon="hugeicons:database"
@@ -226,7 +235,7 @@ export default function Sidebar() {
     if(role == 'Admin Bengkel'){
       return mechanicMenu()
     }
-    return branchManagerMenu(collapse)
+    return branchManagerMenu(collapse).filter(e => e.allowedRoles.includes(role))
   }
 
   return (

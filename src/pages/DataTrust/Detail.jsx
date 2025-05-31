@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card, Descriptions, Typography } from "antd";
 import { useParams } from "react-router";
-import { tradeInService } from "../../services/tradeIn.service";
+import { trustService } from "../../services/trust.service";
 
 export default function DataTrustDetail(){
 
@@ -9,7 +9,7 @@ export default function DataTrustDetail(){
 
   const { data } = useQuery({
     queryKey: ['detail'],
-    queryFn: () => tradeInService.getDetailDataTrust(id),
+    queryFn: () => trustService.getById(id),
     enabled: !!id,
     select: data => data.data
   })
@@ -78,16 +78,16 @@ export default function DataTrustDetail(){
           items={[
             {
               label: 'Tam Check',
-              children: '',
+              children: 'tam file.xlsx',
               span: 2
             },
             {
               label: 'Quality Level',
-              children: data.qualityLevel
+              children: data?.qualityLevel
             },
             {
               label: 'Harga Beli',
-              children: data.price?.toLocaleString()
+              children: data?.price?.toLocaleString()
             }
           ]}
         />

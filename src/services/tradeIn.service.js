@@ -13,6 +13,12 @@ export const tradeInService = {
     })
     return response.data
   },
+  getFinishData: async (params = {}) => {
+    const response = await axiosInstance.get('/trade/finish', {
+      params,
+    })
+    return response.data
+  },
   getDataTrust: async (params = {}) => {
     const response = await axiosInstance.get('/trade/data-trust', {
       params,
@@ -25,6 +31,10 @@ export const tradeInService = {
   },
   getProgressDataById: async (id) => {
     const response = await axiosInstance.get('/trade/progress/' + id)
+    return response.data
+  },
+  getFinishDataById: async (id) => {
+    const response = await axiosInstance.get('/trade/finish/' + id)
     return response.data
   },
   getById: async (id) => {

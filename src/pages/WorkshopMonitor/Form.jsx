@@ -170,7 +170,7 @@ export default function WorkshopMonitorDetail(){
           ]}
         />
         <Typography.Text style={{ display: 'inline-block', margin: '15px 0 10px 0' }} >
-          Kondis Body
+          Kondisi Body
         </Typography.Text>
         <Descriptions
           bordered
