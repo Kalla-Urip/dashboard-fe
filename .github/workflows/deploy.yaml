@@ -3,7 +3,7 @@ name: Deploy Main Api Service
 on:
   push:
     branches:
-      - main
+      - master
   workflow_dispatch:
 
 env:
