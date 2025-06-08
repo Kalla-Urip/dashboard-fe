@@ -18,7 +18,7 @@ export default function Login(){
     },
     onError: (err) => {
       if (err.status == 401) {
-        messageApi.error("Username atau Password salah");
+        messageApi.error(err.response.data.message);
         return;
       }
       messageApi.error("Terjadi Kesalahan");

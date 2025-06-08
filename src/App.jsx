@@ -19,6 +19,11 @@ import DataTrustIndex from "./pages/DataTrust/Index"
 import DataTrustDetail from "./pages/DataTrust/Detail"
 import { MonitorTradeInFinishIndex } from "./pages/MonitorTradeIn/History/Index"
 import MonitorTradeInFinishDetail from "./pages/MonitorTradeIn/History/Detail"
+import VehicleDataIndex from "./pages/VehicleData/Index"
+import VehicleDataDetail from "./pages/VehicleData/Detail"
+import VehicleDataService from "./pages/VehicleData/Service"
+import DataSalesIndex from "./pages/DataSales/Index"
+import DataSalesDetail from "./pages/DataSales/Detail"
 
 const queryClient = new QueryClient()
 
@@ -47,7 +52,6 @@ function App() {
                   <Route index element={<MonitorTradeInFinishIndex/>} />
                   <Route path="detail/:id" element={<MonitorTradeInFinishDetail/>} />
                 </Route>
-
               </Route>
               <Route path="cross-selling" >
                 <Route path="tire" element={<CrossSellingTire/>} />
@@ -61,6 +65,15 @@ function App() {
               <Route path="data-trust" >
                 <Route index element={<DataTrustIndex/>} />
                 <Route path="detail/:id" element={<DataTrustDetail/>} />
+              </Route>
+              <Route path="data-sales" >
+                <Route index element={<DataSalesIndex/>} />
+                <Route path="detail/:id" element={<DataSalesDetail/>} />
+              </Route>
+              <Route path="vehicle-data" >
+                <Route index element={<VehicleDataIndex/>} />
+                <Route path="detail/:id" element={<VehicleDataDetail/>} />
+                <Route path="service/:id" element={<VehicleDataService/>} />
               </Route>
             </Route>
           </Routes>

@@ -170,7 +170,7 @@ const branchManagerMenu = collapse => [
   {
     key: "vehicle-database",
     allowedRoles: ['Super Admin', 'SPV Trust'],
-    label: <Link to={'/vehicle-database'} >Database Kendaraan</Link>,
+    label: <Link to={'/vehicle-data'} >Database Kendaraan</Link>,
     icon: (
       <Icon
         icon="hugeicons:car-05"
