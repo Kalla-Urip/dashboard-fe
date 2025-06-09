@@ -24,6 +24,8 @@ import VehicleDataDetail from "./pages/VehicleData/Detail"
 import VehicleDataService from "./pages/VehicleData/Service"
 import DataSalesIndex from "./pages/DataSales/Index"
 import DataSalesDetail from "./pages/DataSales/Detail"
+import BirthDayIndex from "./pages/MonitorCR/Birthday/Index"
+import CustomerRatingIndex from "./pages/CustomerRating/Index"
 
 const queryClient = new QueryClient()
 
@@ -53,6 +55,14 @@ function App() {
                   <Route path="detail/:id" element={<MonitorTradeInFinishDetail/>} />
                 </Route>
               </Route>
+              <Route path="monitor-cr" >
+                <Route path="birthday" element={<BirthDayIndex/>} />
+                <Route path="progress" element={<MonitorTradeInProgressIndex/>} />
+                <Route path="history">
+                  <Route index element={<MonitorTradeInFinishIndex/>} />
+                  <Route path="detail/:id" element={<MonitorTradeInFinishDetail/>} />
+                </Route>
+              </Route>
               <Route path="cross-selling" >
                 <Route path="tire" element={<CrossSellingTire/>} />
                 <Route path="batterai" element={<CrossSellingBatterai/>} />
@@ -74,6 +84,9 @@ function App() {
                 <Route index element={<VehicleDataIndex/>} />
                 <Route path="detail/:id" element={<VehicleDataDetail/>} />
                 <Route path="service/:id" element={<VehicleDataService/>} />
+              </Route>
+              <Route path="customer-rating" >
+                <Route index element={<CustomerRatingIndex/>} />
               </Route>
             </Route>
           </Routes>

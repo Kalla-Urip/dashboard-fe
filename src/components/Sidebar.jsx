@@ -112,18 +112,18 @@ const branchManagerMenu = collapse => [
     ),
     children: [
       {
-        key: "monitor-cr/assign",
-        label: <Link to={"monitor-cr/assign"}>Assign Trade In</Link>,
+        key: "monitor-cr/birthday",
+        label: <Link to={"monitor-cr/birthday"}>Ulang Tahun</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
       {
         key: "monitor-cr/progress",
-        label: <Link to={"monitor-cr/progress"}>Progress Trade In</Link>,
+        label: <Link to={"monitor-cr/progress"}>Service Berkala</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
       {
         key: "monitor-cr/history",
-        label: <Link to={"monitor-cr/history"}>History Trade In</Link>,
+        label: <Link to={"monitor-cr/history"}>Jatuh Tempo Angsuran</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
     ],
