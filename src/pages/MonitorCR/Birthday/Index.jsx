@@ -121,8 +121,8 @@ export default function BirthDayIndex(){
             },
             {
               title: 'Status',
-              dataIndex: 'sales',
-              render: val => <Tag color="green" >Selesai</Tag>,
+              dataIndex: 'status',
+              render: val => <Tag color={val ? "green" : 'red'} >{val ? 'Selesai' : 'Belum '} Dikerjakan</Tag>,
               width: 120
             },
             {
@@ -130,8 +130,8 @@ export default function BirthDayIndex(){
               title: 'Aksi',
               width: 140,
               fixed: 'right',
-              render: () => (
-                <Button onClick={() => {}} type="primary" >
+              render: (record) => (
+                <Button disabled={record.status} onClick={() => {}} type="primary" >
                   Kirim Notifikasi
                 </Button>
               )
