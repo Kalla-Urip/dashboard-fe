@@ -204,6 +204,11 @@ const branchManagerMenu = collapse => [
         label: <Link to={"master-data/vehicle-type"}>Tipe Mobil</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
+      {
+        key: "master-data/stall",
+        label: <Link to={"master-data/stall"}>Stall</Link>,
+        icon: <SubmenuIcon collapse={collapse} />
+      },
     ],
   },
 ]

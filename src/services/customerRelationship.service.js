@@ -6,5 +6,9 @@ export const customerRelationshipService = {
       params,
     })
     return response.data
+  },
+  followUpBirthDayCustomer: async (id) => {
+    const response = await axiosInstance.post('/customer-relationship/birthday/'+id)
+    return response.data
   }
 }

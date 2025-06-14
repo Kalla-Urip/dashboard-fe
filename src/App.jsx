@@ -26,6 +26,7 @@ import DataSalesIndex from "./pages/DataSales/Index"
 import DataSalesDetail from "./pages/DataSales/Detail"
 import BirthDayIndex from "./pages/MonitorCR/Birthday/Index"
 import CustomerRatingIndex from "./pages/CustomerRating/Index"
+import StallIndex from "./pages/MasterData/Stall/Index"
 
 const queryClient = new QueryClient()
 
@@ -41,6 +42,7 @@ function App() {
               <Route index element={<Dashboard/>} />
               <Route path="master-data" >
                 <Route path="vehicle-type" element={<VehicleTypeIndex/>} />
+                <Route path="stall" element={<StallIndex/>} />
                 <Route path="user-role">
                   <Route index element={<UserRoleIndex/>} />
                   <Route path="create" element={<UserRoleForm/>} />
