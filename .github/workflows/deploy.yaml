@@ -3,7 +3,7 @@ name: Deploy Main Api Service
 on:
   push:
     branches:
-      - master
+      - development
   workflow_dispatch:
 
 env:
@@ -53,7 +53,7 @@ jobs:
           fi
 
           # Run a new container from the loaded image
-          docker run -d --restart always --name ${{ env.REPO_NAME }} -e VITE_BASE_URL=${{ secrets.API_BASE_URL }} -p ${{ vars.PROD_EXPOSE_PORT_APP }}:${{ vars.PORT_APP }} ${{ env.REPO_NAME }}:latest
+          docker run -d --restart always --name ${{ env.REPO_NAME }} -e VITE_BASE_URL=${{ secrets.API_BASE_URL }} -p ${{ vars.DEV_EXPOSE_PORT_APP }}:${{ vars.PORT_APP }} ${{ env.REPO_NAME }}:latest
 
           # Clean up unused docker images
           docker rmi $(docker images -q)
