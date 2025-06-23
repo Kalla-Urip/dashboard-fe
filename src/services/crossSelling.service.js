@@ -19,8 +19,12 @@ export const crossSellingService = {
     })
     return response.data
   },
-  followUp: async (id) => {
-    const response = await axiosInstance.post(`/cross-selling/${id}/follow-up`)
+  followUp: async (id, body) => {
+    const response = await axiosInstance.post(`/cross-selling/${id}/follow-up`, body)
     return response.data
-  }
+  },
+  delete: async (id) => {
+    const response = await axiosInstance.delete(`/cross-selling/${id}`)
+    return response.data
+  },
 }

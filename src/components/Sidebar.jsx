@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import pallete from "../utils/pallete";
 import { useAuth } from "../hooks/useAuth";
 import { sidebarStore } from "../store/sidebarStore";
-import logo from '../../public/logo.svg'
 
 const mechanicMenu = () =>  [
   {
@@ -124,6 +123,31 @@ const branchManagerMenu = collapse => [
       {
         key: "monitor-cr/history",
         label: <Link to={"monitor-cr/history"}>Jatuh Tempo Angsuran</Link>,
+        icon: <SubmenuIcon collapse={collapse} />
+      },
+    ],
+  },
+  {
+    key: "test-drive",
+    allowedRoles: ['Super Admin', 'SPV Sales'],
+    label: 'Test Drive',
+    icon: (
+      <Icon
+        icon="hugeicons:car-time"
+        style={{ marginBottom: -1, marginLeft: -5 }}
+        width="20"
+        height="20"
+      />
+    ),
+    children: [
+      {
+        key: "test-drive/user-role",
+        label: <Link to={"test-drive/user-role"}>User Role</Link>,
+        icon: <SubmenuIcon collapse={collapse} />
+      },
+      {
+        key: "test-drive/vehicle-type",
+        label: <Link to={"test-drive/vehicle-type"}>Daftar Mobil</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
     ],
@@ -262,7 +286,7 @@ export default function Sidebar() {
         >
           <Flex vertical style={{ height: '100%' }} >
             <Flex justify="center" >
-              <Image src={logo} style={{ marginBottom: 20 }} width={ !collapse ? 160 : 50} preview={false} />
+              <Image src={'/logo.svg'} style={{ marginBottom: 20 }} width={ !collapse ? 160 : 50} preview={false} />
             </Flex>
             <Menu
               items={[

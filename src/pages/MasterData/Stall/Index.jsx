@@ -4,7 +4,6 @@ import TableAction from "../../../components/TableAction";
 import { useEffect, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { vehicleTypeService } from "../../../services/vehicleType.service";
 import { afterRequestHandler } from "../../../utils/afterRequestHandler";
 import { stallService } from "../../../services/stall.service";
 

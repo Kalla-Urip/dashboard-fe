@@ -1,8 +1,8 @@
-import { Button, Card, Flex, Input, Pagination, Select, Table, Tag, Typography } from "antd";
+import { Button, Card, Flex, Input, message, Pagination, Select, Table, Tag, Typography } from "antd";
 import { useEffect, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import { useTableHeight } from "../../../hooks/useTableHeight";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
 import { userService } from "../../../services/user.service";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { customerRelationshipService } from "../../../services/customerRelationship.service";
@@ -12,6 +12,7 @@ export default function BirthDayIndex(){
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 500);
   const tableHeight = useTableHeight()
+  const [messageApi,contextHolder] = message.useMessage()
 
   const [dataParams, setDataParams] = useState({
     limit: 10,
@@ -29,6 +30,14 @@ export default function BirthDayIndex(){
     queryKey: ['birthDay', dataParams],
     queryFn: () => customerRelationshipService.getBirthDayCustomer(dataParams),
     placeholderData: keepPreviousData,
+  })
+
+  const followUpMutation = useMutation({
+    mutationFn: id => customerRelationshipService.followUpBirthDayCustomer(id),
+    onSuccess: () => {
+      messageApi.success("Follow Up dikirim")
+    },
+    onError: err => console.log(err)
   })
 
   useEffect(() => {
@@ -50,6 +59,7 @@ export default function BirthDayIndex(){
 
   return (
     <>
+      {contextHolder}
       <Card>
         <Flex gap={20} style={{ marginBottom: 20 }} >
           <Input
@@ -131,7 +141,7 @@ export default function BirthDayIndex(){
               width: 140,
               fixed: 'right',
               render: (record) => (
-                <Button disabled={record.status} onClick={() => {}} type="primary" >
+                <Button disabled={record.status} onClick={() => followUpMutation.mutate(record.id)} type="primary" >
                   Kirim Notifikasi
                 </Button>
               )
