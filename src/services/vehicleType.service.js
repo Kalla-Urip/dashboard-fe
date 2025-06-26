@@ -8,6 +8,10 @@ export const vehicleTypeService = {
     })
     return response.data
   },
+  fetchWithoutPaginate: async () => {
+    const response = await axiosInstance.get('/vehicle-type/')
+    return response.data
+  },
   getById: async (id) => {
     const response = await axiosInstance.get('/vehicle-type/' + id)
     return response.data

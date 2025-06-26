@@ -27,6 +27,11 @@ import DataSalesDetail from "./pages/DataSales/Detail"
 import BirthDayIndex from "./pages/MonitorCR/Birthday/Index"
 import CustomerRatingIndex from "./pages/CustomerRating/Index"
 import StallIndex from "./pages/MasterData/Stall/Index"
+import MaturityIndex from "./pages/MonitorCR/Maturity/Index"
+import TestDriveVehicle from "./pages/TestDrive/VehicleList/Index"
+import AppoinmentIndex from "./pages/TestDrive/Appointment/Index"
+import AppoinmentHistory from "./pages/TestDrive/History"
+import PeriodicServiceIndex from "./pages/MonitorCR/PeriodicService/Index"
 
 const queryClient = new QueryClient()
 
@@ -59,11 +64,8 @@ function App() {
               </Route>
               <Route path="monitor-cr" >
                 <Route path="birthday" element={<BirthDayIndex/>} />
-                <Route path="progress" element={<MonitorTradeInProgressIndex/>} />
-                <Route path="history">
-                  <Route index element={<MonitorTradeInFinishIndex/>} />
-                  <Route path="detail/:id" element={<MonitorTradeInFinishDetail/>} />
-                </Route>
+                <Route path="maturity" element={<MaturityIndex/>} />
+                <Route path="periodic-service" element={<PeriodicServiceIndex/>} />
               </Route>
               <Route path="cross-selling" >
                 <Route path="tire" element={<CrossSellingTire/>} />
@@ -86,6 +88,11 @@ function App() {
                 <Route index element={<VehicleDataIndex/>} />
                 <Route path="detail/:id" element={<VehicleDataDetail/>} />
                 <Route path="service/:id" element={<VehicleDataService/>} />
+              </Route>
+              <Route path="test-drive" >
+                <Route path="vehicle-type" index element={<TestDriveVehicle/>} />
+                <Route path="appoinment" index element={<AppoinmentIndex/>} />
+                <Route path="history" index element={<AppoinmentHistory/>} />
               </Route>
               <Route path="customer-rating" >
                 <Route index element={<CustomerRatingIndex/>} />

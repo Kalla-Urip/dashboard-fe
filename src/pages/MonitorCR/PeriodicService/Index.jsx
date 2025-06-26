@@ -7,7 +7,7 @@ import { userService } from "../../../services/user.service";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { customerRelationshipService } from "../../../services/customerRelationship.service";
 
-export default function BirthDayIndex(){
+export default function PeriodicServiceIndex(){
 
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 500);
@@ -27,16 +27,16 @@ export default function BirthDayIndex(){
     queryFn: () => userService.getSales(),
   })
 
-  const { data: birthDay , isLoading, isRefetching } = useQuery({
-    queryKey: ['birthDay', dataParams],
-    queryFn: () => customerRelationshipService.getBirthDayCustomer(dataParams),
+  const { data: reminder , isLoading, isRefetching } = useQuery({
+    queryKey: ['reminder', dataParams],
+    queryFn: () => customerRelationshipService.getServiceDueDate(dataParams),
     placeholderData: keepPreviousData,
   })
 
   const followUpMutation = useMutation({
-    mutationFn: id => customerRelationshipService.followUpBirthDayCustomer(id),
+    mutationFn: id => customerRelationshipService.followUpServiceDuedate(id),
     onSuccess: () => {
-      queryClient.invalidateQueries('birthDay')
+      queryClient.invalidateQueries('reminder')
       messageApi.success("Follow Up dikirim")
     },
     onError: err => console.log(err)
@@ -57,7 +57,7 @@ export default function BirthDayIndex(){
     })
   }
 
-  const pagination = birthDay?.pagination || { total: 0, page: 1 };
+  const pagination = reminder?.pagination || { total: 0, page: 1 };
 
   return (
     <>
@@ -83,18 +83,11 @@ export default function BirthDayIndex(){
             allowClear
             onChange={(e) => setDataParams({ ...dataParams, sales: e })}
           />
-          <Select
-            placeholder="Status"
-            style={{ width: 180 }}
-            options={salesData?.data?.map(e => ({ label: e.name, value: e.id }))}
-            allowClear
-            onChange={(e) => setDataParams({ ...dataParams, sales: e })}
-          />
         </Flex>
         <Table
           size="small"
           pagination={false}
-          dataSource={birthDay?.data}
+          dataSource={reminder?.data}
           loading={isLoading || isRefetching}
           scroll={{ y: tableHeight }}
           columns={[
@@ -122,8 +115,8 @@ export default function BirthDayIndex(){
               width: 180
             },
             {
-              title: 'Tanggal Lahir',
-              dataIndex: 'birthDate',
+              title: 'Service Terakhir',
+              dataIndex: 'lastService',
               width: 160
             },
             {

@@ -116,13 +116,13 @@ const branchManagerMenu = collapse => [
         icon: <SubmenuIcon collapse={collapse} />
       },
       {
-        key: "monitor-cr/progress",
-        label: <Link to={"monitor-cr/progress"}>Service Berkala</Link>,
+        key: "monitor-cr/periodic-service",
+        label: <Link to={"monitor-cr/periodic-service"}>Service Berkala</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
       {
-        key: "monitor-cr/history",
-        label: <Link to={"monitor-cr/history"}>Jatuh Tempo Angsuran</Link>,
+        key: "monitor-cr/maturity",
+        label: <Link to={"monitor-cr/maturity"}>Jatuh Tempo Angsuran</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
     ],
@@ -141,13 +141,18 @@ const branchManagerMenu = collapse => [
     ),
     children: [
       {
-        key: "test-drive/user-role",
-        label: <Link to={"test-drive/user-role"}>User Role</Link>,
+        key: "test-drive/appoinment",
+        label: <Link to={"test-drive/appoinment"}>Daftar Permintaan</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
       {
         key: "test-drive/vehicle-type",
         label: <Link to={"test-drive/vehicle-type"}>Daftar Mobil</Link>,
+        icon: <SubmenuIcon collapse={collapse} />
+      },
+      {
+        key: "test-drive/history",
+        label: <Link to={"test-drive/history"}>Riwayat Test Drive</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
     ],
