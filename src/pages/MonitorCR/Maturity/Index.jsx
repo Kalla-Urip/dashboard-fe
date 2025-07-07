@@ -136,7 +136,7 @@ export default function MaturityIndex(){
               width: 140,
               fixed: 'right',
               render: (record) => (
-                <Button disabled={record.status} onClick={() => followUpMutation.mutate(record.id)} type="primary" >
+                <Button disabled={record.status || followUpMutation.isPending} onClick={() => followUpMutation.mutate(record.id)} type="primary" >
                   Kirim Notifikasi
                 </Button>
               )

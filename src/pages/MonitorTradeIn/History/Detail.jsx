@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { Button, Card, Descriptions, Flex, Tag, Typography } from "antd";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { tradeInService } from "../../../services/tradeIn.service";
 import pallete from "../../../utils/pallete";
 import { useAuth } from "../../../hooks/useAuth";
 import RenderIf from "../../../components/RenderIf";
+import { API_BASE_URL } from "../../../config/api.config";
 
 const ColoredText = ({ text }) => {
   let color
@@ -167,7 +168,26 @@ export default function MonitorTradeInFinishDetail(){
             styles={descStyle}
             column={2}
             items={[
-              { label: 'Tam Check', children: 'tam.xlsx', span: 2 },
+              { 
+                label: 'Tam Check', 
+                children: (
+                  <Flex align="center" justify="space-between" >
+                    <Typography.Text>
+                      {data?.tamFile?.split('/')[1]}
+                    </Typography.Text>
+                    <Button 
+                      size="small" 
+                      variant="outlined" 
+                      color="primary" 
+                    >
+                      <Link to={`${API_BASE_URL}/file${data?.tamFile.replace('storage', '')}`} >
+                        Unduh
+                      </Link>
+                    </Button>
+                  </Flex>
+                ), 
+                span: 2 
+              },
               { label: 'Quality Level', children: data?.qualityLevel },
               { label: 'Harga Beli', children: 'Rp ' + data?.price?.toLocaleString() },
             ]}

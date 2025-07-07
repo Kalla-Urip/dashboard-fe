@@ -50,7 +50,7 @@ export function KacabUI(){
 
   const { data: tradeInData , isLoading, isRefetching } = useQuery({
     queryKey: ['tradein', dataParams],
-    queryFn: () => tradeInService.getProgressData(dataParams),
+    queryFn: () => tradeInService.getFinishData(dataParams),
     placeholderData: keepPreviousData,
   })
 

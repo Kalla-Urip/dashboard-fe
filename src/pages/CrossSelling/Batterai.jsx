@@ -163,6 +163,11 @@ export default function CrossSellingBatterai(){
               }
             },
             {
+              title: 'Catatan',
+              dataIndex: 'note',
+              width: 180
+            },
+            {
               className: 'last-cell-p',
               title: 'Aksi',
               width: 110,

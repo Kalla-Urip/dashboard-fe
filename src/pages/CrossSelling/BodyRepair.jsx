@@ -173,6 +173,11 @@ export default function CrossSellingBodyRepair(){
               }
             },
             {
+              title: 'Catatan',
+              dataIndex: 'note',
+              width: 180
+            },
+            {
               className: 'last-cell-p',
               title: 'Aksi',
               width: 110,

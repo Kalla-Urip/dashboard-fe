@@ -78,7 +78,7 @@ export default function DataTrustDetail(){
           items={[
             {
               label: 'Tam Check',
-              children: 'tam file.xlsx',
+              children: data?.timFile.split('/')[1],
               span: 2
             },
             {
