@@ -173,7 +173,7 @@ export function KacabUI(){
               width: 150,
             },
             {
-              title: 'Status SPV',
+              title: 'Status Sales',
               width: 150,
               render: record => (
                 <>
@@ -277,7 +277,7 @@ export function KacabUI(){
               children: detailTradeIn?.data?.createdAt
             },
             {
-              label: 'Status SPV',
+              label: 'Status Sales',
               children: (
                 <>
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >

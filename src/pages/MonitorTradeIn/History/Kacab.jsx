@@ -171,7 +171,7 @@ export function KacabUI(){
               dataIndex: 'createdAt',
             },
             {
-              title: 'Status SPV',
+              title: 'Status Sales',
               render: record => (
                 <>
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
@@ -273,7 +273,7 @@ export function KacabUI(){
               children: detailTradeIn?.data?.createdAt
             },
             {
-              label: 'Status SPV',
+              label: 'Status Sales',
               children: (
                 <>
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
