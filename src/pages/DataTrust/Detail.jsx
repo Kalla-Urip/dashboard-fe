@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, Descriptions, Typography } from "antd";
 import { useParams } from "react-router";
 import { trustService } from "../../services/trust.service";
+import { API_BASE_URL } from "../../config/api.config";
 
 export default function DataTrustDetail(){
 
@@ -78,7 +79,23 @@ export default function DataTrustDetail(){
           items={[
             {
               label: 'Tam Check',
-              children: data?.timFile.split('/')[1],
+              children: 
+              (
+                <Flex align="center" justify="space-between" >
+                  <Typography.Text>
+                    {data?.tamFile?.split('/')[1]}
+                  </Typography.Text>
+                  <Button 
+                    size="small" 
+                    variant="outlined" 
+                    color="primary" 
+                  >
+                    <Link to={`${API_BASE_URL}/file${data?.tamFile.replace('storage', '')}`} >
+                      Unduh
+                    </Link>
+                  </Button>
+                </Flex>
+              ),
               span: 2
             },
             {
