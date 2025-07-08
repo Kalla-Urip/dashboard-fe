@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { Flex, Grid, Image, Layout, Menu } from "antd";
+import { Drawer, Flex, Grid, Image, Layout, Menu } from "antd";
 import { Link } from "react-router";
 import pallete from "../utils/pallete";
 import { useAuth } from "../hooks/useAuth";
@@ -315,7 +315,7 @@ export default function Sidebar() {
           </Flex>
         </Layout.Sider>
       }
-      {/* <Drawer
+      <Drawer
         open={drawerCollapse}
         placement="left"
         closable={false}
@@ -329,18 +329,18 @@ export default function Sidebar() {
       >
         <Flex vertical style={{ height: '100%' }} >
           <Flex justify="center" >
-            <Image src={logo} style={{ marginBottom: 20 }} width={ !collapse ? 60 : 45} preview={false} />
+            <Image src={'/logo.svg'} style={{ marginBottom: 20 }} width={ !collapse ? 60 : 45} preview={false} />
           </Flex>
           <Menu
-            items={filterMenuItems(items, user?.user?.permissions)}
+            items={showMenuItems(user?.user?.employeeType)}
             style={{ borderRight: "none", fontWeight: 400, overflowY: 'auto', flex: 1 }}
-            defaultSelectedKeys={getSelectedKey()}
-            defaultOpenKeys={getOpenKey()}
+            // defaultSelectedKeys={getSelectedKey()}
+            // defaultOpenKeys={getOpenKey()}
             mode="inline"
             onClick={toggleDrawer}
           />
         </Flex>
-      </Drawer> */}
+      </Drawer>
     </>
   );
 }
