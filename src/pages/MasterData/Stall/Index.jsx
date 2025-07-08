@@ -6,12 +6,15 @@ import useDebounce from "../../../hooks/useDebounce";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { afterRequestHandler } from "../../../utils/afterRequestHandler";
 import { stallService } from "../../../services/stall.service";
+import { breadcrumbStore } from "../../../store/breadcrumbStore";
 
 export default function StallIndex(){
 
   const [form] = Form.useForm()
 
   const queryClient = useQueryClient()
+
+  const { setTitle, setItems } = breadcrumbStore()
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -27,6 +30,18 @@ export default function StallIndex(){
     page: 1,
     query: debouncedKeyword,
   })
+
+  useEffect(() => {
+    setTitle("Stall")
+    setItems([
+      {
+        title: 'Master Data'
+      },
+      {
+        title: 'Stall'
+      }
+    ])
+  }, [])
 
   useEffect(() => {
     setDataParams((prev) => ({

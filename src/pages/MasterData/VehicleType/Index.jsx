@@ -6,6 +6,7 @@ import useDebounce from "../../../hooks/useDebounce";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { vehicleTypeService } from "../../../services/vehicleType.service";
 import { afterRequestHandler } from "../../../utils/afterRequestHandler";
+import { breadcrumbStore } from "../../../store/breadcrumbStore";
 
 export default function VehicleTypeIndex(){
 
@@ -20,6 +21,8 @@ export default function VehicleTypeIndex(){
     id: null
   })
 
+  const { setTitle, setItems } = breadcrumbStore()
+
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 500);
   const [dataParams, setDataParams] = useState({
@@ -27,6 +30,18 @@ export default function VehicleTypeIndex(){
     page: 1,
     query: debouncedKeyword,
   })
+
+  useEffect(() => {
+    setTitle("Tipe Mobil")
+    setItems([
+      {
+        title: 'Master Data'
+      },
+      {
+        title: 'Tipe Mobil'
+      }
+    ])
+  }, [])
 
   useEffect(() => {
     setDataParams((prev) => ({

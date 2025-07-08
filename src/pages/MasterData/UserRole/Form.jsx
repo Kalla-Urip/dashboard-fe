@@ -5,6 +5,7 @@ import { userService } from "../../../services/user.service"
 import { useNavigate, useParams } from "react-router"
 import { useEffect } from "react"
 import { afterRequestHandler } from "../../../utils/afterRequestHandler"
+import { breadcrumbStore } from "../../../store/breadcrumbStore"
 
 const employeeType = [
   'SPV Sales',
@@ -21,6 +22,8 @@ export default function UserRoleForm(){
 
   const { id } = useParams()
 
+  const { setTitle, setItems } = breadcrumbStore()
+
   const [form] = Form.useForm()
   const [messageApi] = message.useMessage();
 
@@ -29,6 +32,21 @@ export default function UserRoleForm(){
     queryFn: () => userService.getById(id),
     enabled: !!id
   })
+
+  useEffect(() => {
+    setTitle("User Role")
+    setItems([
+      {
+        title: 'Master Data'
+      },
+      {
+        title: 'User Role'
+      },
+      {
+        title: 'Form'
+      },
+    ])
+  }, [])
 
   useEffect(() => {
     if(data?.data){

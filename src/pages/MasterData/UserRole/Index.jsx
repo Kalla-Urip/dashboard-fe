@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { userService } from "../../../services/user.service";
 import useDebounce from "../../../hooks/useDebounce";
+import { breadcrumbStore } from "../../../store/breadcrumbStore";
 
 const employeeTypes = [
   'SPV Sales',
@@ -21,6 +22,8 @@ export default function UserRoleIndex(){
 
   const queryClient = useQueryClient()
 
+  const { setTitle, setItems } = breadcrumbStore()
+
   const [messageApi, contextHolder] = message.useMessage();
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 500);
@@ -31,6 +34,18 @@ export default function UserRoleIndex(){
     query: debouncedKeyword,
     employeeType
   })
+
+  useEffect(() => {
+    setTitle("User Role")
+    setItems([
+      {
+        title: 'Master Data'
+      },
+      {
+        title: 'User Role'
+      }
+    ])
+  }, [])
 
   useEffect(() => {
     setDataParams((prev) => ({

@@ -23,7 +23,7 @@ const mechanicMenu = () =>  [
 const branchManagerMenu = collapse => [
   {
     key: "workshop-monitor",
-    allowedRoles: ['Super Admin', 'SPV Trust'],
+    allowedRoles: ['Super Admin', 'SPV Trust', 'SPV Sales'],
     label: <Link to={'/workshop-monitor'} >Monitor Bengkel</Link>,
     icon: (
       <Icon
@@ -38,7 +38,7 @@ const branchManagerMenu = collapse => [
     key: "cross-selling",
     label: "Cross Selling",
     permission: 'Monitor Trade In',
-    allowedRoles: ['Super Admin'],
+    allowedRoles: ['Super Admin', 'SPV Trust', 'SPV Sales'],
     icon: (
       <Icon
         icon="hugeicons:tire"
