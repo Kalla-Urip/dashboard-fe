@@ -11,4 +11,8 @@ export const serviceDataService = {
     const response = await axiosInstance.get('/service-data/' + id)
     return response.data
   },
+  update: async (data) => {
+    const response = await axiosInstance.put(`/service-data/${data.id}`, data)
+    return response.data
+  },
 }

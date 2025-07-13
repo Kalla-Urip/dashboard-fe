@@ -209,7 +209,7 @@ export function SpvTrustUI(){
           layout="vertical" 
           onFinish={assignMutation.mutate}
         >
-          <Form.Item name={'trustId'} rules={[{ required: true }]} label="Trust" >
+          <Form.Item name={'trustId'} rules={[{ required: true }]} label="UA" >
             <Select
               options={trustData?.data?.map(e => ({ label: e.name, value: e.id }))}
             />

@@ -186,7 +186,7 @@ const branchManagerMenu = collapse => [
   {
     key: "customer-rating",
     allowedRoles: ['Super Admin'],
-    label: <Link to={'/customer-rating'} >Penilaian Kustomer</Link>,
+    label: <Link to={'/customer-rating'} >Penilaian Customer</Link>,
     icon: (
       <Icon
         icon="hugeicons:user-star-01"

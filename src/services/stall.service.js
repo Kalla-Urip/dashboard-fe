@@ -2,6 +2,10 @@ import axiosInstance from "../utils/axios"
 // import { handleApiError } from "../utils/errorHandler"
 
 export const stallService = {
+  fetchAllWithoutPaginate: async () => {
+    const response = await axiosInstance.get('/stall')
+    return response.data
+  },
   fetchAll: async (params = {}) => {
     const response = await axiosInstance.get('/stall/paginate', {
       params,
