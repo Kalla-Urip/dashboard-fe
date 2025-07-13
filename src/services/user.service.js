@@ -8,6 +8,12 @@ export const userService = {
     })
     return response.data
   },
+  getMechanic: async (params = {}) => {
+    const response = await axiosInstance.get('/user/mechanic', {
+      params,
+    })
+    return response.data
+  },
   getSpvTrust: async (params = {}) => {
     const response = await axiosInstance.get('/user/spv-trust', {
       params,

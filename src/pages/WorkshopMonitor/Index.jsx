@@ -7,6 +7,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { serviceDataService } from "../../services/serviceData.service";
 import { useTableHeight } from "../../hooks/useTableHeight";
 import { stallService } from "../../services/stall.service";
+import { userService } from "../../services/user.service";
 
 export default function WorkshopMonitorIndex(){
 
@@ -30,6 +31,12 @@ export default function WorkshopMonitorIndex(){
   const { data: stallData } = useQuery({
     queryKey: ['stall'],
     queryFn: () => stallService.fetchAllWithoutPaginate(),
+    select: ({ data }) => data
+  })
+
+  const { data: mechanicData } = useQuery({
+    queryKey: ['mechanic'],
+    queryFn: () => userService.getMechanic(),
     select: ({ data }) => data
   })
 
@@ -59,6 +66,7 @@ export default function WorkshopMonitorIndex(){
   const changeMutation = useMutation({
     mutationFn: (val) => serviceDataService.update(val),
     onSuccess: () => {
+      messageApi.success("Stall berhasil disimpan")
       queryClient.invalidateQueries('service-data')
       setLoadingId(null)
     } 
@@ -66,7 +74,12 @@ export default function WorkshopMonitorIndex(){
 
   const handleChangeStall = (id, value) => {
     setLoadingId(id)
-    changeMutation.mutate({ id, StallId: value })
+    changeMutation.mutate({ id, StallId: value ? value : null })
+  }
+
+  const handleChangeMechanic = (id, value) => {
+    setLoadingId(id)
+    changeMutation.mutate({ id, MechanicId: value ? value : null })
   }
 
   return (
@@ -157,6 +170,25 @@ export default function WorkshopMonitorIndex(){
               }
             },
             {
+              title: 'Petugas',
+              dataIndex: 'mechanic',
+              align: 'center',
+              width: 140,
+              fixed: 'right',
+              render: (val, record) => {
+                return (
+                  <Select
+                    style={{ width: '100%' }}
+                    options={mechanicData?.map(e => ({ label: e.name, value: e.id }))}
+                    value={val}
+                    onChange={(e) => handleChangeMechanic(record.id, e)}
+                    loading={loadingId == record.id && changeMutation.isPending}
+                    allowClear
+                  />
+                )
+              }
+            },
+            {
               title: 'Stall',
               dataIndex: 'stall',
               align: 'center',
@@ -170,6 +202,7 @@ export default function WorkshopMonitorIndex(){
                     value={val}
                     onChange={(e) => handleChangeStall(record.id, e)}
                     loading={loadingId == record.id && changeMutation.isPending}
+                    allowClear
                   />
                 )
               }

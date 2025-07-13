@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { Card, Descriptions, Typography } from "antd";
-import { useParams } from "react-router";
+import { Button, Card, Descriptions, Flex, Typography } from "antd";
+import { Link, useParams } from "react-router";
 import { trustService } from "../../services/trust.service";
 import { API_BASE_URL } from "../../config/api.config";
 
@@ -90,7 +90,7 @@ export default function DataTrustDetail(){
                     variant="outlined" 
                     color="primary" 
                   >
-                    <Link to={`${API_BASE_URL}/file${data?.tamFile.replace('storage', '')}`} >
+                    <Link to={`${API_BASE_URL}/file${data?.tamFile?.replace('storage', '')}`} >
                       Unduh
                     </Link>
                   </Button>

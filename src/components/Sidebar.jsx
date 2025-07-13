@@ -38,7 +38,7 @@ const branchManagerMenu = collapse => [
     key: "cross-selling",
     label: "Cross Selling",
     permission: 'Monitor Trade In',
-    allowedRoles: ['Super Admin', 'SPV Trust', 'SPV Sales'],
+    allowedRoles: ['Super Admin', 'SPV Trust', 'SPV Sales', 'Admin Bengkel'],
     icon: (
       <Icon
         icon="hugeicons:tire"
