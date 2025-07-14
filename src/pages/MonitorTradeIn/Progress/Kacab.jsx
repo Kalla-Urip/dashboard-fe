@@ -13,7 +13,7 @@ const renderBadge = status => {
   if(status == 'Berhasil')
     return <Tag color={'green'} >Berhasil</Tag>
   if(status == 'Gagal')
-    return <Tag color={'red'} >Gagal</Tag>
+    return <Tag color={'red'} >Tidak Deal</Tag>
   return <Tag color={'cyan'} >Sedang Diproses</Tag>
 }
 
