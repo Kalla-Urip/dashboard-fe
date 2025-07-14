@@ -23,7 +23,7 @@ const mechanicMenu = () =>  [
 const branchManagerMenu = collapse => [
   {
     key: "workshop-monitor",
-    allowedRoles: ['Super Admin', 'SPV Trust', 'SPV Sales'],
+    allowedRoles: ['Super Admin', 'SPV Trust', 'SPV Sales', 'Admin Bengkel'],
     label: <Link to={'/workshop-monitor'} >Monitor Bengkel</Link>,
     icon: (
       <Icon
