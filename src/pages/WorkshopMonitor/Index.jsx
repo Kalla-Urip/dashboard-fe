@@ -66,7 +66,7 @@ export default function WorkshopMonitorIndex(){
   const changeMutation = useMutation({
     mutationFn: (val) => serviceDataService.update(val),
     onSuccess: () => {
-      messageApi.success("Stall berhasil disimpan")
+      messageApi.success("Data berhasil disimpan")
       queryClient.invalidateQueries('service-data')
       setLoadingId(null)
     } 
