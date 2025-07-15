@@ -1,9 +1,9 @@
-name: Deploy Main Api Service
+name: Deploy Main Dashboard
 
 on:
   push:
     branches:
-      - development
+      - master
   workflow_dispatch:
 
 env:
@@ -11,7 +11,7 @@ env:
   SSH_HOST        : ${{ secrets.SSH_HOST }}
   SSH_USER        : ${{ secrets.SSH_USER }}
   PORT_APP        : ${{ vars.PORT_APP }}
-  REPO_NAME       : ${{ github.event.repository.name }}-dev
+  REPO_NAME       : ${{ github.event.repository.name }}
 
 jobs:
   build-and-run:
@@ -53,7 +53,7 @@ jobs:
           fi
 
           # Run a new container from the loaded image
-          docker run -d --restart always --name ${{ env.REPO_NAME }} -e VITE_BASE_URL=${{ secrets.API_BASE_URL }} -p ${{ vars.DEV_EXPOSE_PORT_APP }}:${{ vars.PORT_APP }} ${{ env.REPO_NAME }}:latest
+          docker run -d --restart always --name ${{ env.REPO_NAME }} -e VITE_BASE_URL=${{ secrets.API_BASE_URL }} -p ${{ vars.PROD_EXPOSE_PORT_APP }}:${{ vars.PORT_APP }} ${{ env.REPO_NAME }}:latest
 
           # Clean up unused docker images
           docker rmi $(docker images -q)
