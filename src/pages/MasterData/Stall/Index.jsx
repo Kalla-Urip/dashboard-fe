@@ -154,6 +154,10 @@ export default function StallIndex(){
               dataIndex: 'name',
             },
             {
+              title: 'URL',
+              dataIndex: 'url',
+            },
+            {
               className: 'last-cell-p',
               title: 'Aksi',
               align: 'right',
