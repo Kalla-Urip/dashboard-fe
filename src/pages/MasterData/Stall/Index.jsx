@@ -209,6 +209,13 @@ export default function StallIndex(){
           >
             <Input/>
           </Form.Item>
+          <Form.Item 
+            label="URL" 
+            name={'url'} 
+            rules={[{ required: true }]}
+          >
+            <Input/>
+          </Form.Item>
         </Form>
       </Drawer>
     </>
