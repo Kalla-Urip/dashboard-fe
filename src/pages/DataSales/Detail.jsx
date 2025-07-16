@@ -39,10 +39,6 @@ export default function DataSalesDetail(){
               children: data?.phone
             },
             {
-              label: 'type',
-              children: data?.saleType,
-            },
-            {
               label: 'Profesi',
               children: data?.profession,
             },
