@@ -80,7 +80,7 @@ export default function VehicleDataService(){
             items={[
               {
                 label: 'Asuransi',
-                children: data?.Vehicle.insurance,
+                children: data?.Vehicle?.insurance,
               },
             ]}
           />
@@ -107,11 +107,11 @@ export default function VehicleDataService(){
               },
               {
                 label: 'Petugas Bengkel',
-                children: data?.mechanic.name,
+                children: data?.mechanic?.name,
               },
               {
                 label: 'Stall',
-                children: data?.Stall.name,
+                children: data?.Stall?.name,
               },
               {
                 label: 'Trade In',
