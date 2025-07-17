@@ -24,7 +24,7 @@ const createCarpetConditionData = (data) => {
 
 const createTireConditionData = (data) => {
 
-  return Object.entries(data).map(e => {
+  return Object.entries(data ?? []).map(e => {
     return {
       label: e[0].replaceAll('_', ' ').toUpperCase(),
       children: <ColoredText text={e[1]} />
@@ -34,7 +34,7 @@ const createTireConditionData = (data) => {
 
 const createBodyConditionData = (data) => {
 
-  return Object.entries(data).map(e => {
+  return Object.entries(data ?? []).map(e => {
     return {
       label: e[0].replaceAll('_', ' ').toUpperCase(),
       children: <ColoredText text={e[1]} />
