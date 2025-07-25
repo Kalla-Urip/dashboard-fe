@@ -74,7 +74,7 @@ export default function KacabUI(){
 
   const { data: topSales } = useQuery({
     queryKey: ['topSales', selectedMonthSales],
-    queryFn: () => dashboardService.getTopSales({ month: selectedMonthSales }),
+    queryFn: () => dashboardService.getTopSales({ month: selectedMonthSales, year: currentYear }),
     select: ({ data }) => data
   })
 
