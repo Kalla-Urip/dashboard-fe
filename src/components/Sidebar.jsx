@@ -197,6 +197,19 @@ const branchManagerMenu = collapse => [
     ),
   },
   {
+    key: "customer-data",
+    allowedRoles: ['Super Admin', 'SPV Sales'],
+    label: <Link to={'/customer-data'} >Data Kustomer</Link>,
+    icon: (
+      <Icon
+        icon="hugeicons:user-multiple"
+        style={{ marginBottom: -1, marginLeft: -5 }}
+        width="20"
+        height="20"
+      />
+    ),
+  },
+  {
     key: "vehicle-database",
     allowedRoles: ['Super Admin', 'SPV Trust'],
     label: <Link to={'/vehicle-data'} >Database Kendaraan</Link>,

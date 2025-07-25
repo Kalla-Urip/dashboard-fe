@@ -32,6 +32,8 @@ import TestDriveVehicle from "./pages/TestDrive/VehicleList/Index"
 import AppoinmentIndex from "./pages/TestDrive/Appointment/Index"
 import AppoinmentHistory from "./pages/TestDrive/History"
 import PeriodicServiceIndex from "./pages/MonitorCR/PeriodicService/Index"
+import CustomerDataIndex from "./pages/CustomerData/Index"
+import CustomerDataForm from "./pages/CustomerData/Form"
 
 const queryClient = new QueryClient()
 
@@ -88,6 +90,10 @@ function App() {
                 <Route index element={<VehicleDataIndex/>} />
                 <Route path="detail/:id" element={<VehicleDataDetail/>} />
                 <Route path="service/:id" element={<VehicleDataService/>} />
+              </Route>
+              <Route path="customer-data" >
+                <Route index element={<CustomerDataIndex/>} />
+                <Route path="detail/:id" element={<CustomerDataForm/>} />
               </Route>
               <Route path="test-drive" >
                 <Route path="vehicle-type" index element={<TestDriveVehicle/>} />
