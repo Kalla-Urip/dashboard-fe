@@ -58,6 +58,8 @@ export default function KacabUI(){
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [selectedYear, setSelectedYear] = useState(currentYear);
 
+  const [selectedMonthSales, setSelectedMonthSales] = useState(currentMonth);
+
   const { data: monthlyData } = useQuery({
     queryKey: ['monthlyData', selectedMonth, selectedYear],
     queryFn: () => dashboardService.getMonthlySummary({ year: selectedYear, month: selectedMonth }),
@@ -71,8 +73,8 @@ export default function KacabUI(){
   })
 
   const { data: topSales } = useQuery({
-    queryKey: ['topSales'],
-    queryFn: () => dashboardService.getTopSales(),
+    queryKey: ['topSales', selectedMonthSales],
+    queryFn: () => dashboardService.getTopSales({ month: selectedMonthSales }),
     select: ({ data }) => data
   })
 
@@ -337,9 +339,9 @@ export default function KacabUI(){
             <Select
               style={{ width: 120, marginLeft: 'auto' }}
               options={months}
-              value={selectedMonth}
+              value={selectedMonthSales}
               placeholder="Bulan"
-              onChange={e => setSelectedMonth(e)}
+              onChange={e => setSelectedMonthSales(e)}
             />
           </Flex>
           <Space size={14} direction="vertical" style={{ width: '100%' }} >
