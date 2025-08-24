@@ -29,3 +29,29 @@
 .ant-table tbody tr td {
   color: #212B36 !important;
 }
+
+/* markdown.css */
+.markdown { line-height: 1.7; color: rgba(0,0,0,.88); }
+.markdown h1 { font-size: 1.875rem; margin: 1em 0 .5em; font-weight: 700; }
+.markdown h2 { font-size: 1.5rem;  margin: 1em 0 .5em; font-weight: 700; }
+.markdown h3 { font-size: 1.25rem; margin: .8em 0 .4em; font-weight: 600; }
+
+.markdown p, .markdown ul, .markdown ol, .markdown blockquote, .markdown table {
+  margin: .6em 0;
+}
+.markdown ul { padding-left: 1.4em; list-style: disc; }
+.markdown ol { padding-left: 1.4em; list-style: decimal; }
+.markdown li { margin-bottom: 9px; }
+
+.markdown blockquote {
+  border-left: 4px solid #e5e7eb; padding: .25rem .75rem;
+  background: #fafafa; color: #4b5563;
+}
+
+.markdown code { background: #f3f4f6; padding: 2px 6px; border-radius: 6px; }
+.markdown pre {
+  background: #0f172a; color: #e5e7eb; padding: 12px; border-radius: 10px; overflow: auto;
+}
+
+.markdown table { width: 100%; border-collapse: collapse; }
+.markdown th, .markdown td { border-bottom: 1px solid #e5e7eb; padding: .5rem .75rem; text-align: left; }

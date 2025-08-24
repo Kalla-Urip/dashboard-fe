@@ -1,14 +1,19 @@
 import { Breadcrumb, Flex, Layout, Typography } from "antd";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import Footer from "../components/Footer";
 import { breadcrumbStore } from "../store/breadcrumbStore";
+import RenderIf from "../components/RenderIf";
 // import { breadcrumbStore } from "../store/breadcrumbStore";
 
 export default function MainLayout(){
 
   const { items, title } = breadcrumbStore()
+
+  const location = useLocation();
+  
+  const isUCarePage = location.pathname.includes('/u-care');
  
   return (
     <Layout style={{ height: '100vh' }} >
@@ -21,9 +26,11 @@ export default function MainLayout(){
               items={items}
               style={{ marginBottom: 8 }}
             />
-            <Typography.Title level={4} style={{ marginBottom: 21 }} >
-              {title}
-            </Typography.Title>
+            <RenderIf when={!isUCarePage} >
+              <Typography.Title level={4} style={{ marginBottom: 21 }} >
+                {title}
+              </Typography.Title>
+            </RenderIf>
             <Outlet/>
           </Layout.Content>
           <Footer/>

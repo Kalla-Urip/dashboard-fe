@@ -34,6 +34,8 @@ import AppoinmentHistory from "./pages/TestDrive/History"
 import PeriodicServiceIndex from "./pages/MonitorCR/PeriodicService/Index"
 import CustomerDataIndex from "./pages/CustomerData/Index"
 import CustomerDataForm from "./pages/CustomerData/Form"
+import UCareSales from "./pages/Ucare/Sales"
+import UCareGeneralRepair from "./pages/Ucare/GeneralRepair"
 
 const queryClient = new QueryClient()
 
@@ -47,6 +49,10 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/" element={<ProtectedRoute><MainLayout/></ProtectedRoute>} >
               <Route index element={<Dashboard/>} />
+              <Route path="u-care" >
+                <Route path="sales" element={<UCareSales/>} />
+                <Route path="general-repair" element={<UCareGeneralRepair/>} />
+              </Route>
               <Route path="master-data" >
                 <Route path="vehicle-type" element={<VehicleTypeIndex/>} />
                 <Route path="stall" element={<StallIndex/>} />

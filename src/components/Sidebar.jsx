@@ -320,6 +320,32 @@ export default function Sidebar() {
                     />
                   ),
                 },
+                // {
+                //   key: "u-care",
+                //   label: "U Care Analytic",
+                //   permission: 'Master Data',
+                //   allowedRoles: ['Super Admin'],
+                //   icon: (
+                //     <Icon
+                //       icon="hugeicons:database"
+                //       style={{ marginBottom: -1, marginLeft: -5 }}
+                //       width="20"
+                //       height="20"
+                //     />
+                //   ),
+                //   children: [
+                //     {
+                //       key: "u-care/sales",
+                //       label: <Link to={"u-care/sales"}>Sales</Link>,
+                //       icon: <SubmenuIcon collapse={collapse} />
+                //     },
+                //     {
+                //       key: "u-care/general-repair",
+                //       label: <Link to={"u-care/general-repair"}>General Repair</Link>,
+                //       icon: <SubmenuIcon collapse={collapse} />
+                //     }
+                //   ],
+                // },
                 ...showMenuItems(user?.user?.employeeType)
               ]}
               style={{ borderRight: "none", fontWeight: 400, overflowY: 'auto', flex: 1 }}
