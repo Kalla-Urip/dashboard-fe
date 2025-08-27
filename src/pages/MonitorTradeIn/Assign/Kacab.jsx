@@ -104,6 +104,7 @@ export function KacabUI(){
           />
         </Flex>
         <Table
+          bordered
           size="small"
           pagination={false}
           dataSource={tradeInData?.data}

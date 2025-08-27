@@ -102,9 +102,7 @@ export default function CustomerDataForm(){
             </Col>
             <Col span={12} >
               <Form.Item rules={[{ required: true }]} name={'profession'} label="Profesi" >
-                <Select
-                  options={['PNS', 'TNI/POLRI', 'Pelajar/Mahasiswa', 'Ibu Rumah Tangga', 'Lainnya'].map(e => ({ value: e, label: e }))}
-                />
+                <Input/>
               </Form.Item>
             </Col>
             <Col span={12} >

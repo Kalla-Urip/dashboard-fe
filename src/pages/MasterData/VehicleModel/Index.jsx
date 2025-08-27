@@ -1,15 +1,14 @@
 import { Icon } from "@iconify/react";
-import { Button, Card, Drawer, Flex, Input, Pagination, Table, Form, message, Select } from "antd";
+import { Button, Card, Drawer, Flex, Input, Pagination, Table, Form, message } from "antd";
 import TableAction from "../../../components/TableAction";
 import { useEffect, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { vehicleTypeService } from "../../../services/vehicleType.service";
 import { afterRequestHandler } from "../../../utils/afterRequestHandler";
 import { breadcrumbStore } from "../../../store/breadcrumbStore";
 import { vehicleModelService } from "../../../services/vehicleModel.service";
 
-export default function VehicleTypeIndex(){
+export default function VehicleModelIndex(){
 
   const [form] = Form.useForm()
 
@@ -33,13 +32,13 @@ export default function VehicleTypeIndex(){
   })
 
   useEffect(() => {
-    setTitle("Tipe Mobil")
+    setTitle("Model Mobil")
     setItems([
       {
         title: 'Master Data'
       },
       {
-        title: 'Tipe Mobil'
+        title: 'Model Mobil'
       }
     ])
   }, [])
@@ -58,8 +57,8 @@ export default function VehicleTypeIndex(){
 
   const submitMutation = useMutation({
       mutationFn: val => drawerOpt.id
-      ? vehicleTypeService.update({...val, id: drawerOpt.id})
-      : vehicleTypeService.store(val),
+      ? vehicleModelService.update({...val, id: drawerOpt.id})
+      : vehicleModelService.store(val),
       ...afterRequestHandler(
         drawerOpt.id,
         messageApi,
@@ -71,28 +70,22 @@ export default function VehicleTypeIndex(){
     })
 
   const deleteMutation = useMutation({
-    mutationFn: val => vehicleTypeService.delete(val),
+    mutationFn: val => vehicleModelService.delete(val),
     onSuccess: () => {
       queryClient.invalidateQueries('vehicles')
       messageApi.success('Data berhasil dihapus');
     }
   })
 
-  const { data: vehicleModel  } = useQuery({
-    queryKey: ['models', dataParams],
-    queryFn: () => vehicleModelService.fetchAll(dataParams),
-    placeholderData: keepPreviousData,
-  })
-
   const { data: vehicleData , isLoading, isRefetching } = useQuery({
     queryKey: ['vehicles', dataParams],
-    queryFn: () => vehicleTypeService.fetchAll(dataParams),
+    queryFn: () => vehicleModelService.fetchAll(dataParams),
     placeholderData: keepPreviousData,
   })
 
   const { data: detailVehicleType } = useQuery({
     queryKey: ['detail-vehicles', drawerOpt.id],
-    queryFn: () => vehicleTypeService.getById(drawerOpt.id),
+    queryFn: () => vehicleModelService.getById(drawerOpt.id),
     enabled: !!drawerOpt.id
   })
 
@@ -140,7 +133,7 @@ export default function VehicleTypeIndex(){
               />
             }
           >
-            Tambah Tipe Mobil
+            Tambah Model Mobil
           </Button>
         </Flex>
         <Table
@@ -157,12 +150,8 @@ export default function VehicleTypeIndex(){
               render: (text, record, index) =>  index + 1,
             },
             {
-              title: 'Tipe Mobil',
-              dataIndex: 'name',
-            },
-            {
               title: 'Model Mobil',
-              render: (r) => r?.VehicleModel?.name,
+              dataIndex: 'name',
             },
             {
               className: 'last-cell-p',
@@ -215,18 +204,6 @@ export default function VehicleTypeIndex(){
         >
           <Form.Item 
             label="Model" 
-            name={'VehicleModelId'} 
-            rules={[{ required: true }]}
-          >
-            <Select
-              options={vehicleModel?.data.map(e => ({ label: e.name, value: e.id }))}
-              showSearch
-              allowClear
-              optionFilterProp="label"
-            />
-          </Form.Item>
-          <Form.Item 
-            label="Tipe" 
             name={'name'} 
             rules={[{ required: true }]}
           >

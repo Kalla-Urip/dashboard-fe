@@ -77,6 +77,7 @@ export function SpvSalesUI(){
           />
         </Flex>
         <Table
+          bordered
           size="small"
           pagination={false}
           dataSource={tradeInData?.data}
@@ -128,7 +129,7 @@ export function SpvSalesUI(){
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
                     {record.salesName}
                   </Typography.Text>
-                  <Tag color={record.salesStatus == 'Berhasil' ? "green" : 'red'} style={{ marginTop: 5 }}  >
+                  <Tag color={record.salesStatus == 'Deal' ? "green" : 'red'} style={{ marginTop: 5 }}  >
                     {record.salesStatus}
                   </Tag>
                 </>

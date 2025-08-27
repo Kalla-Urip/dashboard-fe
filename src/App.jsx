@@ -36,6 +36,7 @@ import CustomerDataIndex from "./pages/CustomerData/Index"
 import CustomerDataForm from "./pages/CustomerData/Form"
 import UCareSales from "./pages/Ucare/Sales"
 import UCareGeneralRepair from "./pages/Ucare/GeneralRepair"
+import VehicleModelIndex from "./pages/MasterData/VehicleModel/Index"
 
 const queryClient = new QueryClient()
 
@@ -55,6 +56,7 @@ function App() {
               </Route>
               <Route path="master-data" >
                 <Route path="vehicle-type" element={<VehicleTypeIndex/>} />
+                <Route path="vehicle-model" element={<VehicleModelIndex/>} />
                 <Route path="stall" element={<StallIndex/>} />
                 <Route path="user-role">
                   <Route index element={<UserRoleIndex/>} />

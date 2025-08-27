@@ -11,4 +11,8 @@ export const salesService = {
     const response = await axiosInstance.get('/sales/' + id)
     return response.data
   },
+  import: async (file) => {
+    const response = await axiosInstance.postForm('/sales/import', { file })
+    return response.data
+  },
 }

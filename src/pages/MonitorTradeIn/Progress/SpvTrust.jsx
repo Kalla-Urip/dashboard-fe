@@ -8,6 +8,21 @@ import { userService } from "../../../services/user.service";
 import RenderIf from "../../../components/RenderIf";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 
+const renderBadge = status => {
+
+  const colors = {
+    "Belum Dikerjakan": 'orange',
+    "Low": 'yellow',
+    "Medium": 'cyan',
+    "Hot": "green",
+    "Deal": "green",
+    "Tidak Deal": "red",
+    "Taksasi": "cyan"
+  }
+
+  return <Tag color={colors[status]} >{status}</Tag>
+}
+
 export function SpvTrustUI(){
 
   const [form] = Form.useForm()
@@ -115,6 +130,7 @@ export function SpvTrustUI(){
           />
         </Flex>
         <Table
+          bordered
           size="small"
           pagination={false}
           dataSource={tradeInData?.data}
@@ -157,31 +173,34 @@ export function SpvTrustUI(){
               dataIndex: 'createdAt',
             },
             {
-              title: 'Status Trust',
+              title: 'Status Sales',
               render: record => (
                 <>
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
                     {record.trustName}
                   </Typography.Text>
-                  <Tag color="cyan" style={{ marginTop: 5 }}  >
-                    Sedang Diproses
-                  </Tag>
+                  {/* <Tag color="orange" style={{ marginTop: 5 }}  >
+                    Belum Dikerjakan
+                  </Tag> */}
+                  {renderBadge(record.trustStatus ?? "Belum Dikerjakan")}
                 </>
               )
             },
             {
               className: 'last-cell-p',
               title: 'Aksi',
-              width: 110,
+              // width: 110,
+              width: 80,
               fixed: 'right',
+              align: 'center',
               render: record => (
                 <Flex gap={10} >
                   <Button onClick={() => setDrawerOpt({ id: record.id, open: true, action: 'Edit' })} variant="solid" style={{ backgroundColor: '#30B0C7', color: '#fff' }} >
                     Edit
                   </Button>
-                  <Button onClick={() => setDrawerOpt({  id: record.id, open: true, action: 'Detail' })} type="primary" >
+                  {/* <Button onClick={() => setDrawerOpt({  id: record.id, open: true, action: 'Detail' })} type="primary" >
                     Detail
-                  </Button>
+                  </Button> */}
                 </Flex>
               )
             },
@@ -250,6 +269,7 @@ export function SpvTrustUI(){
             <Form.Item name={'trustId'} rules={[{ required: true }]} label="Trust" >
               <Select
                 options={trustData?.data?.map(e => ({ label: e.name, value: e.id }))}
+                disabled={detailTradeIn?.data?.trustStatus}
               />
             </Form.Item>
           </Form>

@@ -99,6 +99,7 @@ export function SpvTrustUI(){
           />
         </Flex>
         <Table
+          bordered
           size="small"
           pagination={false}
           dataSource={tradeInData?.data}
@@ -146,8 +147,9 @@ export function SpvTrustUI(){
             {
               className: 'last-cell-p',
               title: 'Aksi',
-              width: 110,
+              width: 80,
               fixed: 'right',
+              align: 'center',
               render: record => (
                 <Button onClick={() => setDrawerOpt({ data: record, open: true })} type="primary" >
                   Detail
