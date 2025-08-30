@@ -2,16 +2,19 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, Descriptions, Flex, Tag, Typography } from "antd";
 import { useParams } from "react-router";
 import { serviceDataService } from "../../services/serviceData.service";
-import pallete from "../../utils/pallete";
 
 const ColoredText = ({ text }) => {
-  let color
+  
+  const textSplit = text.split(',')
+  
+  return textSplit.map(e => {
+    let color
+    if(['Hijau', 'Normal', 'Good'].includes(e.trim())) color = 'green'
+    if(['Kuning', 'Lecet', 'Recharger', 'Replace'].includes(e.trim())) color = 'orange'
+    if(['Merah', 'Penyok', 'Bad Cell'].includes(e.trim())) color = 'red'
+    return <Tag color={color} >{e}</Tag>
+  })
 
-  if(['Hijau', 'Normal'].includes(text)) color = pallete.primary[700]
-  if(['Kuning', 'Lecet'].includes(text)) color = pallete.secondary[400]
-  if(['Merah', 'Penyok'].includes(text)) color = 'red'
-
-  return <Typography.Text style={{ color }} >{text}</Typography.Text>
 
 }
 
@@ -154,7 +157,7 @@ export default function WorkshopMonitorDetail(){
           size="small"
           styles={descStyle}
           column={2}
-          items={[{ label: 'Kondisi Baterai', children: data?.batteraiCondition }]}
+          items={[{ label: 'Kondisi Baterai', children: data?.batteraiCondition && <ColoredText text={data?.batteraiCondition} /> }]}
         />
         <Typography.Text style={{ display: 'inline-block', margin: '15px 0 10px 0' }} >
           BBM & Kilometer
