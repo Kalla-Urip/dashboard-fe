@@ -13,6 +13,7 @@
     "@nivo/bar": "^0.99.0",
     "@nivo/core": "^0.99.0",
     "@nivo/line": "^0.99.0",
+    "@nivo/pie": "^0.99.0",
     "@tanstack/react-query": "^5.75.1",
     "antd": "^5.24.9",
     "axios": "^1.9.0",
