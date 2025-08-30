@@ -4,7 +4,7 @@ import pallete from "../../utils/pallete";
 
 const cardRadius = 6;
 
-export default function RevenueChart({ data, availableYears }) {
+export default function     RevenueChart({ data, availableYears }) {
   return (
     <div style={{ 
       flex: 1, 
@@ -16,7 +16,7 @@ export default function RevenueChart({ data, availableYears }) {
       paddingBottom: 0, 
       paddingLeft: 18, 
       display: 'flex', 
-      flexDirection: 'column', 
+      flexDirection: 'column',
       minWidth: 0, 
       height: '100%' 
     }}>
