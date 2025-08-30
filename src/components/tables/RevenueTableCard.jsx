@@ -9,6 +9,7 @@ export default function RevenueTableCard({ title, data, availableOptions }) {
       dataIndex: 'no',
       key: 'no',
       width: 60,
+      align: 'left', // Left aligned
       render: (text) => (
         <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 400, color: '#000' }}>
           {text}
@@ -19,6 +20,7 @@ export default function RevenueTableCard({ title, data, availableOptions }) {
       title: 'Nama Sales',
       dataIndex: 'name',
       key: 'name',
+      align: 'left', // Left aligned
       render: (text) => (
         <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 400, color: '#000' }}>
           {text}
@@ -29,6 +31,7 @@ export default function RevenueTableCard({ title, data, availableOptions }) {
       title: 'Revenue',
       dataIndex: 'revenue',
       key: 'revenue',
+      align: 'center', // Left aligned
       render: (value) => (
         <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: '#000' }}>
           Rp {value.toLocaleString('id-ID')}
@@ -53,7 +56,7 @@ export default function RevenueTableCard({ title, data, availableOptions }) {
           {title}
         </Typography.Title>
         <div style={{ marginLeft: 'auto' }}>
-          <select style={{ borderRadius: 8, padding: '4px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}>
+          <select style={{ borderRadius: 8, padding: '2px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}>
             {availableOptions.map((option, index) => (
               <option key={index} value={option}>{option}</option>
             ))}
@@ -79,6 +82,7 @@ export default function RevenueTableCard({ title, data, availableOptions }) {
           size="small"
         />
       </div>
+    
     </div>
   );
 }

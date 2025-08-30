@@ -9,7 +9,7 @@ export default function DashboardAnalyticsSection({ data }) {
       <div style={{ 
         display: 'flex', 
         gap: SECTION_GAP, 
-        height: 320 
+        height: 340 
       }}>
         {/* Top 5 Model - Pie Chart */}
         <div style={{ flex: 1 }}>

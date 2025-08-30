@@ -36,7 +36,7 @@ export default function PieChartCard({ title, data, total, availableOptions, cen
         flex: 1,
         justifyContent: 'center'
       }}>
-        <div style={{ height: 150, width: 150, position: 'relative', marginBottom: 20 }}>
+        <div style={{ height: 180, width: 180, position: 'relative', marginBottom: 20 }}>
           <ResponsivePie
             data={data}
             margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
