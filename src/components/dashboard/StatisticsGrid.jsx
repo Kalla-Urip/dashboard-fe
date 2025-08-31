@@ -21,7 +21,7 @@ export default function StatisticsGrid({ data }) {
         <StatCard
           size="small"
           icon={icTotalRevenue}
-          value={`Rp ${data.totalRevenue.toLocaleString('id-ID')}`}
+          value={`Rp ${(data?.totalRevenue || 0).toLocaleString('id-ID')}`}
           subtitle="Total Revenue"
           bg={pallete.primary[700]}
           color="#fff"
@@ -39,12 +39,12 @@ export default function StatisticsGrid({ data }) {
         gap: CARD_GAP 
       }}>
         <MiniStatCard
-          value={`Rp ${data.revenueThisMonth.toLocaleString('id-ID')}`}
+          value={`Rp ${(data?.revenueThisMonth || 0).toLocaleString('id-ID')}`}
           subtitle="Revenue Bulan Ini"
           subtitleColor={pallete.primary[700]}
         />
         <MiniStatCard
-          value={`Rp ${data.revenueLastMonth.toLocaleString('id-ID')}`}
+          value={`Rp ${(data?.revenueLastMonth || 0).toLocaleString('id-ID')}`}
           subtitle="Revenue Bulan Lalu"
           subtitleColor={pallete.secondary[400]}
         />
@@ -55,7 +55,7 @@ export default function StatisticsGrid({ data }) {
         <StatCard
           size="small"
           icon={icTotalSales}
-          value={data.totalSales.toLocaleString('id-ID')}
+          value={(data?.totalSales || 0).toLocaleString('id-ID')}
           subtitle="Total Penjualan Sales"
           bg="#fff"
           color="#000000"
@@ -69,7 +69,7 @@ export default function StatisticsGrid({ data }) {
         <StatCard
           size="small"
           icon={icProcessTrust}
-          value={data.totalTrust.toLocaleString('id-ID')}
+          value={(data?.totalTrust || 0).toLocaleString('id-ID')}
           subtitle="Total Proses Trust"
           bg="#fff"
           color="#000000"
