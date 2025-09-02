@@ -91,4 +91,24 @@ export const dashboardDummyData = {
     { no: 9, namaSales: 'Maya Sari', deal: 21, hot: 19, medium: 18, low: 22, tidakDeal: 20 },
     { no: 10, namaSales: 'Joko Widodo', deal: 20, hot: 20, medium: 22, low: 18, tidakDeal: 20 },
   ],
+
+  // Trade In Metrics Data
+  tradeInMetrics: [
+    { id: 1, name: 'Deal', value: 82, color: '#00CA52' },
+    { id: 2, name: 'Taksasi', value: 70, color: '#02BFD8' },
+    { id: 3, name: 'Medium', value: 40, color: '#8B5CF6' },
+    { id: 4, name: 'Tidak Deal', value: 40, color: '#FF6C64' },
+  ],
+  totalTradeInMetrics: 232,
+
+  tradeInLevelData: [
+    { no: 1, namaTrust: 'Ade Darmadi', deal: 20, taksasi: 20, medium: 20, tidakDeal: 20 },
+    { no: 2, namaTrust: 'Muhammad Imam', deal: 20, taksasi: 20, medium: 20, tidakDeal: 20 },
+    { no: 3, namaTrust: 'Irfandi', deal: 20, taksasi: 20, medium: 20, tidakDeal: 20 },
+    { no: 4, namaTrust: 'Siti Aminah', deal: 18, taksasi: 22, medium: 19, tidakDeal: 21 },
+    { no: 5, namaTrust: 'Budi Hartono', deal: 22, taksasi: 18, medium: 21, tidakDeal: 19 },
+    { no: 6, namaTrust: 'Maya Sari', deal: 19, taksasi: 21, medium: 20, tidakDeal: 20 },
+    { no: 7, namaTrust: 'Ahmad Rizki', deal: 21, taksasi: 19, medium: 18, tidakDeal: 22 },
+    { no: 8, namaTrust: 'Dewi Lestari', deal: 20, taksasi: 20, medium: 22, tidakDeal: 18 },
+  ],
 };

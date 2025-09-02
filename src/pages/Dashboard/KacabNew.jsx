@@ -1,6 +1,7 @@
 import DashboardOverviewSection from "../../components/dashboard/DashboardOverviewSection";
 import DashboardAnalyticsSection from "../../components/dashboard/DashboardAnalyticsSection";
 import DashboardSalesMetricsSection from "../../components/dashboard/DashboardSalesMetricsSection";
+import DashboardTradeInSection from "../../components/dashboard/DashboardTradeInSection";
 import WorkshopMetricsSection from "../../components/dashboard/WorkshopMetricsSection";
 import { dashboardDummyData } from "../../data/DashboardDummyData";
 
@@ -10,6 +11,7 @@ export default function KacabNewUI() {
       <DashboardOverviewSection data={dashboardDummyData} />
       <DashboardAnalyticsSection data={dashboardDummyData} />
       <DashboardSalesMetricsSection data={dashboardDummyData} />
+      <DashboardTradeInSection data={dashboardDummyData} />
       <WorkshopMetricsSection />
     </div>
   );

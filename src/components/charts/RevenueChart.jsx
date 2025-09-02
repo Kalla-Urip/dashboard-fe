@@ -4,8 +4,23 @@ import pallete from "../../utils/pallete";
 
 const cardRadius = 6;
 
-export default function     RevenueChart({ data, availableYears }) {
-  return (
+export default function RevenueChart({ data }) {
+  const currentYear = new Date().getFullYear();
+  
+  // Generate years from current year to 2024 (descending order)
+  const generateYearOptions = () => {
+    const currentYear = new Date().getFullYear();
+    const years = [];
+    for (let year = currentYear; year >= 2024; year--) {
+      years.push({
+        label: year.toString(),
+        value: year,
+      });
+    }
+    return years;
+  };
+
+  const yearOptions = generateYearOptions();  return (
     <div style={{ 
       flex: 1, 
       background: '#fff', 
@@ -25,9 +40,12 @@ export default function     RevenueChart({ data, availableYears }) {
           Metrik Revenue
         </Typography.Title>
         <div style={{ marginLeft: 'auto' }}>
-          <select style={{ borderRadius: 8, padding: '4px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}>
-            {availableYears.map((year) => (
-              <option key={year} value={year}>{year}</option>
+          <select 
+            style={{ borderRadius: 8, padding: '4px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}
+            defaultValue={currentYear}
+          >
+            {yearOptions.map((year) => (
+              <option key={year.value} value={year.value}>{year.label}</option>
             ))}
           </select>
         </div>
@@ -52,6 +70,7 @@ export default function     RevenueChart({ data, availableYears }) {
           axisLeft={{
             tickSize: 0,
             tickPadding: 8,
+            tickValues: 5, // Membatasi jumlah tick menjadi maksimal 5
             legend: '',
             legendOffset: -32,
             style: { fontFamily: 'Lato', fontWeight: 400, fontSize: 14, fill: '#212B36' },

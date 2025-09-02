@@ -2,7 +2,19 @@ import { Typography, Table } from "antd";
 
 const cardRadius = 6;
 
-export default function RevenueTableCard({ title, data, availableOptions }) {
+export default function RevenueTableCard({ 
+  title, 
+  data, 
+  availableOptions, 
+  selectedMonth, 
+  onMonthChange 
+}) {
+  const handleSelectChange = (e) => {
+    if (onMonthChange) {
+      onMonthChange(parseInt(e.target.value));
+    }
+  };
+
   const columns = [
     {
       title: 'No.',
@@ -56,9 +68,13 @@ export default function RevenueTableCard({ title, data, availableOptions }) {
           {title}
         </Typography.Title>
         <div style={{ marginLeft: 'auto' }}>
-          <select style={{ borderRadius: 8, padding: '2px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}>
+          <select 
+            style={{ borderRadius: 8, padding: '2px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}
+            value={selectedMonth || availableOptions[0]?.value}
+            onChange={handleSelectChange}
+          >
             {availableOptions.map((option, index) => (
-              <option key={index} value={option}>{option}</option>
+              <option key={index} value={option.value || option}>{option.label || option}</option>
             ))}
           </select>
         </div>
@@ -66,21 +82,58 @@ export default function RevenueTableCard({ title, data, availableOptions }) {
       
       {/* Table */}
       <div style={{ flex: 1 }}>
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            pageSize: 4,
-            showSizeChanger: false,
-            showQuickJumper: false,
-            showTotal: false,
-            style: {
-              marginTop: 16,
-            },
-          }}
-          rowKey="no"
-          size="small"
-        />
+        {data && data.length > 0 ? (
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={{
+              pageSize: 4,
+              showSizeChanger: false,
+              showQuickJumper: false,
+              showTotal: false,
+              style: {
+                marginTop: 16,
+              },
+            }}
+            rowKey="no"
+            size="small"
+          />
+        ) : (
+          /* No Data State */
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+            textAlign: 'center'
+          }}>
+            <div style={{
+              fontSize: 48,
+              color: '#DFE3E8',
+              marginBottom: 16
+            }}>
+              📋
+            </div>
+            <Typography.Text style={{
+              fontFamily: 'Lato',
+              fontSize: 16,
+              fontWeight: 400,
+              color: '#637381'
+            }}>
+              Data tidak tersedia
+            </Typography.Text>
+            <Typography.Text style={{
+              fontFamily: 'Lato',
+              fontSize: 14,
+              fontWeight: 400,
+              color: '#919EAB',
+              marginTop: 8
+            }}>
+              Silakan pilih bulan lain
+            </Typography.Text>
+          </div>
+        )}
       </div>
     
     </div>
