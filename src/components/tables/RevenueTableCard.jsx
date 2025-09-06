@@ -1,4 +1,4 @@
-import { Typography, Table } from "antd";
+import { Typography, Table, Empty } from "antd";
 
 const cardRadius = 6;
 
@@ -99,39 +99,32 @@ export default function RevenueTableCard({
             size="small"
           />
         ) : (
-          /* No Data State */
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
-            textAlign: 'center'
-          }}>
-            <div style={{
-              fontSize: 48,
-              color: '#DFE3E8',
-              marginBottom: 16
-            }}>
-              📋
-            </div>
-            <Typography.Text style={{
-              fontFamily: 'Lato',
-              fontSize: 16,
-              fontWeight: 400,
-              color: '#637381'
-            }}>
-              Data tidak tersedia
-            </Typography.Text>
-            <Typography.Text style={{
-              fontFamily: 'Lato',
-              fontSize: 14,
-              fontWeight: 400,
-              color: '#919EAB',
-              marginTop: 8
-            }}>
-              Silakan pilih bulan lain
-            </Typography.Text>
+          <div style={{ padding: '40px 0' }}>
+            <Empty 
+              description={
+                <div style={{ textAlign: 'center' }}>
+                  <Typography.Text style={{
+                    fontFamily: 'Lato',
+                    fontSize: 16,
+                    fontWeight: 400,
+                    color: '#637381',
+                    display: 'block'
+                  }}>
+                    Data tidak tersedia
+                  </Typography.Text>
+                  <Typography.Text style={{
+                    fontFamily: 'Lato',
+                    fontSize: 14,
+                    fontWeight: 400,
+                    color: '#919EAB',
+                    marginTop: 8,
+                    display: 'block'
+                  }}>
+                    Silakan pilih bulan lain
+                  </Typography.Text>
+                </div>
+              }
+            />
           </div>
         )}
       </div>

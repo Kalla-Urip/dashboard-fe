@@ -1,18 +1,28 @@
-import { Typography, Table } from "antd";
+import { Typography, Table, Empty } from "antd";
 
 const cardRadius = 6;
 
-export default function TradeInLevelTableCard({ title, data, availableOptions }) {
+export default function TradeInLevelTableCard({ 
+  title, 
+  data, 
+  availableOptions, 
+  selectedMonth, 
+  onMonthChange 
+}) {
+  const handleSelectChange = (e) => {
+    if (onMonthChange) {
+      onMonthChange(parseInt(e.target.value));
+    }
+  };
+
   const columns = [
     {
-      title: 'No.',
-      dataIndex: 'no',
-      key: 'no',
-      width: 60,
-      align: 'center',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
       render: (text) => (
-        <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 400, color: '#000' }}>
-          {text}
+        <span title={text}>
+          {text?.length > 10 ? `${text.slice(0, 10)}...` : text}
         </span>
       ),
     },
@@ -89,9 +99,16 @@ export default function TradeInLevelTableCard({ title, data, availableOptions })
           {title}
         </Typography.Title>
         <div style={{ marginLeft: 'auto' }}>
-          <select style={{ borderRadius: 8, padding: '2px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}>
-            {availableOptions.map((option, index) => (
-              <option key={index} value={option}>{option}</option>
+          <select 
+            style={{ borderRadius: 8, padding: '2px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}
+            value={selectedMonth || ""}
+            onChange={handleSelectChange}
+          >
+            <option value="">Select Month</option>
+            {availableOptions?.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
             ))}
           </select>
         </div>
@@ -99,21 +116,51 @@ export default function TradeInLevelTableCard({ title, data, availableOptions })
       
       {/* Table */}
       <div style={{ flex: 1 }}>
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            pageSize: 4,
-            showSizeChanger: false,
-            showQuickJumper: false,
-            showTotal: false,
-            style: {
-              marginTop: 16,
-            },
-          }}
-          rowKey="no"
-          size="small"
-        />
+        {data && data.length > 0 ? (
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={{
+              pageSize: 4,
+              showSizeChanger: false,
+              showQuickJumper: false,
+              showTotal: false,
+              style: {
+                marginTop: 16,
+              },
+            }}
+            rowKey="no"
+            size="small"
+          />
+        ) : (
+          <div style={{ padding: '40px 0' }}>
+            <Empty 
+              description={
+                <div style={{ textAlign: 'center' }}>
+                  <Typography.Text style={{
+                    fontFamily: 'Lato',
+                    fontSize: 16,
+                    fontWeight: 400,
+                    color: '#637381',
+                    display: 'block'
+                  }}>
+                    Data tidak tersedia
+                  </Typography.Text>
+                  <Typography.Text style={{
+                    fontFamily: 'Lato',
+                    fontSize: 14,
+                    fontWeight: 400,
+                    color: '#919EAB',
+                    marginTop: 8,
+                    display: 'block'
+                  }}>
+                    Silakan pilih bulan lain
+                  </Typography.Text>
+                </div>
+              }
+            />
+          </div>
+        )}
       </div>
     
     </div>

@@ -49,4 +49,28 @@ export const dashboardService = {
     })
     return response.data
   },
+  getSalesDataByStatus: async (params = {}) => {
+    const response = await axiosInstance.get('/dashboard/sales-data-by-status', {
+      params,
+    })
+    return response.data
+  },
+  getSalesNameDataByStatus: async (params = {}) => {
+    const response = await axiosInstance.get('/dashboard/sales-name-data-by-status', {
+      params,
+    })
+    return response.data
+  },
+  getTrustDataByStatus: async (params = {}) => {
+    const response = await axiosInstance.get('/dashboard/trust-data-by-status', {
+      params,
+    })
+    return response.data
+  },
+  getTrustNameDataByStatus: async (params = {}) => {
+    const response = await axiosInstance.get('/dashboard/trust-name-data-by-status', {
+      params,
+    })
+    return response.data
+  },
 }

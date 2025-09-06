@@ -10,7 +10,7 @@ export default function KacabNewUI() {
     <div style={{ width: '100%', margin: 0, padding: 0 }}>
       <DashboardOverviewSection />
       <DashboardAnalyticsSection />
-      <DashboardSalesMetricsSection data={dashboardDummyData} />
+      <DashboardSalesMetricsSection />
       <DashboardTradeInSection data={dashboardDummyData} />
       <WorkshopMetricsSection />
     </div>
