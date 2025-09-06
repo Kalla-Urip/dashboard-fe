@@ -55,7 +55,7 @@ export default function DashboardAnalyticsSection() {
     
     const transformed = apiData.data.map((item, index) => ({
       id: item.name,
-      name: item.name, // For legend display
+      name: item.name.length > 10 ? item.name.substring(0, 10) + '...' : item.name, // Limit to 10 chars
       label: item.name,
       value: item.totalSales,
       color: `hsl(${200 + index * 40}, 70%, 50%)`
@@ -72,7 +72,7 @@ export default function DashboardAnalyticsSection() {
     
     const transformed = apiData.data.map((item, index) => ({
       id: item.model,
-      name: item.model, // For legend display
+      name: item.model.length > 10 ? item.model.substring(0, 10) + '...' : item.model, // Limit to 10 chars
       label: item.model,
       value: item.totalSales,
       color: `hsl(${150 + index * 40}, 70%, 50%)`
@@ -89,7 +89,7 @@ export default function DashboardAnalyticsSection() {
     
     return apiData.data.map((item, index) => ({
       no: index + 1,
-      name: item.name,
+      name: item.name.length > 10 ? item.name.substring(0, 15) + '...' : item.name, // Limit to 10 chars
       revenue: item.revenue
     }));
   };
