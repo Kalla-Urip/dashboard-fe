@@ -64,7 +64,7 @@ export function SpvTrustUI(){
           <Select
             placeholder="Status"
             style={{ width: 180 }}
-            options={['Berhasil', 'Gagal'].map(e => ({ label: e, value: e }))}
+            options={['Deal', 'Tidak Deal'].map(e => ({ label: e, value: e }))}
             allowClear
             onChange={(e) => setDataParams({ ...dataParams, status: e })}
           />
@@ -77,6 +77,7 @@ export function SpvTrustUI(){
           />
         </Flex>
         <Table
+          bordered
           size="small"
           pagination={false}
           dataSource={tradeInData?.data}
@@ -128,7 +129,7 @@ export function SpvTrustUI(){
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
                     {record.trustName}
                   </Typography.Text>
-                  <Tag color={record.trustStatus == 'Berhasil' ? "green" : 'red'} style={{ marginTop: 5 }}  >
+                  <Tag color={record.trustStatus == 'Deal' ? "green" : 'red'} style={{ marginTop: 5 }}  >
                     {record.trustStatus}
                   </Tag>
                 </>

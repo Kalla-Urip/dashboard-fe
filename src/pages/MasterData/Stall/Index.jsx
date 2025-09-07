@@ -154,6 +154,10 @@ export default function StallIndex(){
               dataIndex: 'name',
             },
             {
+              title: 'URL',
+              dataIndex: 'url',
+            },
+            {
               className: 'last-cell-p',
               title: 'Aksi',
               align: 'right',
@@ -205,6 +209,13 @@ export default function StallIndex(){
           <Form.Item 
             label="Stall" 
             name={'name'} 
+            rules={[{ required: true }]}
+          >
+            <Input/>
+          </Form.Item>
+          <Form.Item 
+            label="URL" 
+            name={'url'} 
             rules={[{ required: true }]}
           >
             <Input/>

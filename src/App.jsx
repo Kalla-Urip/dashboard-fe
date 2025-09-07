@@ -32,6 +32,11 @@ import TestDriveVehicle from "./pages/TestDrive/VehicleList/Index"
 import AppoinmentIndex from "./pages/TestDrive/Appointment/Index"
 import AppoinmentHistory from "./pages/TestDrive/History"
 import PeriodicServiceIndex from "./pages/MonitorCR/PeriodicService/Index"
+import CustomerDataIndex from "./pages/CustomerData/Index"
+import CustomerDataForm from "./pages/CustomerData/Form"
+import UCareSales from "./pages/Ucare/Sales"
+import UCareGeneralRepair from "./pages/Ucare/GeneralRepair"
+import VehicleModelIndex from "./pages/MasterData/VehicleModel/Index"
 
 const queryClient = new QueryClient()
 
@@ -45,8 +50,13 @@ function App() {
             <Route path="/login" element={<Login/>} />
             <Route path="/" element={<ProtectedRoute><MainLayout/></ProtectedRoute>} >
               <Route index element={<Dashboard/>} />
+              <Route path="u-care" >
+                <Route path="sales" element={<UCareSales/>} />
+                <Route path="general-repair" element={<UCareGeneralRepair/>} />
+              </Route>
               <Route path="master-data" >
                 <Route path="vehicle-type" element={<VehicleTypeIndex/>} />
+                <Route path="vehicle-model" element={<VehicleModelIndex/>} />
                 <Route path="stall" element={<StallIndex/>} />
                 <Route path="user-role">
                   <Route index element={<UserRoleIndex/>} />
@@ -88,6 +98,10 @@ function App() {
                 <Route index element={<VehicleDataIndex/>} />
                 <Route path="detail/:id" element={<VehicleDataDetail/>} />
                 <Route path="service/:id" element={<VehicleDataService/>} />
+              </Route>
+              <Route path="customer-data" >
+                <Route index element={<CustomerDataIndex/>} />
+                <Route path="detail/:id" element={<CustomerDataForm/>} />
               </Route>
               <Route path="test-drive" >
                 <Route path="vehicle-type" index element={<TestDriveVehicle/>} />

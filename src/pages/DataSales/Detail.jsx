@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { Card, Descriptions, Typography } from "antd";
-import { useParams } from "react-router";
+import { Button, Card, Descriptions, Flex, Typography } from "antd";
+import { useNavigate, useParams } from "react-router";
 import { salesService } from "../../services/sales.service";
 
 export default function DataSalesDetail(){
+
+  const navigate = useNavigate()
 
   const { id } = useParams()
 
@@ -32,32 +34,78 @@ export default function DataSalesDetail(){
             },
             {
               label: 'Tanggal Lahir',
-              children: data?.birthDate
+              children: data?.birthDate ?? '-'
             },
             {
               label: 'No Whatsapp',
-              children: data?.phone
-            },
-            {
-              label: 'type',
-              children: data?.saleType,
+              children: data?.phone ?? '-'
             },
             {
               label: 'Profesi',
-              children: data?.profession,
+              children: data?.profession ?? '-',
             },
             {
               label: 'Range Pendapatan',
-              children: data?.salaryRange
+              children: data?.salaryRange ?? '-'
             },
             {
               label: 'Alamat',
-              children: data?.address
+              children: data?.address ?? '-'
             },
           ]}
         />
       </Card>
-      <Card style={{ marginTop: 15 }} >
+      <Card style={{ margin: '15px 0' }} >
+        <Typography.Title level={5} >
+          Data Penjualan
+        </Typography.Title>
+        <Descriptions
+          bordered
+          size="small"
+          // styles={descStyle}
+          column={2}
+          items={[
+            {
+              label: 'SPK',
+              children: data?.spk ?? '-',
+              span: 2
+            },
+            {
+              label: 'Sumber Prospek',
+              children: data?.prospectSource ?? '-'
+            },
+            {
+              label: 'Jenis Kustomer',
+              children: data?.customerType ?? '-'
+            },
+            {
+              label: 'Leasing',
+              children: data?.leasing ?? '-'
+            },
+            {
+              label: 'Metode Bayar',
+              children: data?.type ?? '-'
+            },
+            {
+              label: 'Harga Mobil',
+              children: `Rp ${(data?.price ?? "0").toLocaleString()}`
+            },
+            {
+              label: 'Diskon',
+              children: `Rp ${(data?.discount ?? "0").toLocaleString()}`
+            },
+            {
+              label: 'Receive Amount',
+              children: `Rp ${(data?.receiveAmount ?? "0").toLocaleString()}`
+            },
+            {
+              label: 'Receivable',
+              children: `Rp ${(data?.receivable ?? "0").toLocaleString()}`
+            },
+          ]}
+        />
+      </Card>
+      <Card >
         <Typography.Title level={5} >
           Data Kendaraan
         </Typography.Title>
@@ -73,7 +121,7 @@ export default function DataSalesDetail(){
             },
             {
               label: 'Tipe Kendaraan',
-              children: data?.type
+              children: data?.vehicleType
             },
             {
               label: 'Tahun',
@@ -90,6 +138,11 @@ export default function DataSalesDetail(){
           ]}
         />
       </Card>
+      <Flex justify="flex-end" style={{ marginTop: 10 }} >
+        <Button onClick={() => navigate('/data-sales')} variant="outlined" color="primary" >
+          Kembali
+        </Button>
+      </Flex>
     </>
   )
 }

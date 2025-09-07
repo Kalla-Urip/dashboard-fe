@@ -212,6 +212,8 @@ export function SpvSalesUI(){
           <Form.Item name={'salesId'} rules={[{ required: true }]} label="Sales" >
             <Select
               options={salesData?.data?.map(e => ({ label: e.name, value: e.id }))}
+              showSearch
+              optionFilterProp="label"
             />
           </Form.Item>
         </Form>

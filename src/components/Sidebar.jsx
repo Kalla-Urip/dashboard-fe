@@ -197,6 +197,19 @@ const branchManagerMenu = collapse => [
     ),
   },
   {
+    key: "customer-data",
+    allowedRoles: ['Super Admin', 'SPV Sales'],
+    label: <Link to={'/customer-data'} >Data Kustomer</Link>,
+    icon: (
+      <Icon
+        icon="hugeicons:user-multiple"
+        style={{ marginBottom: -1, marginLeft: -5 }}
+        width="20"
+        height="20"
+      />
+    ),
+  },
+  {
     key: "vehicle-database",
     allowedRoles: ['Super Admin', 'SPV Trust'],
     label: <Link to={'/vehicle-data'} >Database Kendaraan</Link>,
@@ -226,6 +239,11 @@ const branchManagerMenu = collapse => [
       {
         key: "master-data/user-role",
         label: <Link to={"master-data/user-role"}>User Role</Link>,
+        icon: <SubmenuIcon collapse={collapse} />
+      },
+      {
+        key: "master-data/vehicle-model",
+        label: <Link to={"master-data/vehicle-model"}>Model Mobil</Link>,
         icon: <SubmenuIcon collapse={collapse} />
       },
       {
@@ -306,6 +324,32 @@ export default function Sidebar() {
                       height="22"
                     />
                   ),
+                },
+                {
+                  key: "u-care",
+                  label: "U Care Analytic",
+                  permission: 'Master Data',
+                  allowedRoles: ['Super Admin'],
+                  icon: (
+                    <Icon
+                      icon="hugeicons:analytics-up"
+                      style={{ marginBottom: -1, marginLeft: -5 }}
+                      width="20"
+                      height="20"
+                    />
+                  ),
+                  children: [
+                    {
+                      key: "u-care/sales",
+                      label: <Link to={"u-care/sales"}>Sales</Link>,
+                      icon: <SubmenuIcon collapse={collapse} />
+                    },
+                    {
+                      key: "u-care/general-repair",
+                      label: <Link to={"u-care/general-repair"}>General Repair</Link>,
+                      icon: <SubmenuIcon collapse={collapse} />
+                    }
+                  ],
                 },
                 ...showMenuItems(user?.user?.employeeType)
               ]}

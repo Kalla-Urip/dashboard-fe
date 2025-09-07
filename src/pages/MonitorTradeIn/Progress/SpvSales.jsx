@@ -8,6 +8,20 @@ import { userService } from "../../../services/user.service";
 import RenderIf from "../../../components/RenderIf";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 
+const renderBadge = status => {
+
+  const colors = {
+    "Belum Dikerjakan": 'orange',
+    "Low": 'yellow',
+    "Medium": 'cyan',
+    "Hot": "green",
+    "Deal": "green",
+    "Tidak Deal": "red"
+  }
+
+  return <Tag color={colors[status]} >{status}</Tag>
+}
+
 export function SpvSalesUI(){
 
   const [form] = Form.useForm()
@@ -115,6 +129,7 @@ export function SpvSalesUI(){
           />
         </Flex>
         <Table
+          bordered
           size="small"
           pagination={false}
           dataSource={tradeInData?.data}
@@ -163,25 +178,28 @@ export function SpvSalesUI(){
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
                     {record.salesName}
                   </Typography.Text>
-                  <Tag color="cyan" style={{ marginTop: 5 }}  >
-                    Sedang Diproses
-                  </Tag>
+                  {/* <Tag color="orange" style={{ marginTop: 5 }}  >
+                    Belum Dikerjakan
+                  </Tag> */}
+                  {renderBadge(record.salesStatus ?? "Belum Dikerjakan")}
                 </>
               )
             },
             {
               className: 'last-cell-p',
               title: 'Aksi',
-              width: 110,
+              // width: 110,
+              width: 80,
+              align: 'center',
               fixed: 'right',
               render: record => (
                 <Flex gap={10} >
                   <Button onClick={() => setDrawerOpt({ id: record.id, open: true, action: 'Edit' })} variant="solid" style={{ backgroundColor: '#30B0C7', color: '#fff' }} >
                     Edit
                   </Button>
-                  <Button onClick={() => setDrawerOpt({  id: record.id, open: true, action: 'Detail' })} type="primary" >
+                  {/* <Button onClick={() => setDrawerOpt({  id: record.id, open: true, action: 'Detail' })} type="primary" >
                     Detail
-                  </Button>
+                  </Button> */}
                 </Flex>
               )
             },
@@ -250,6 +268,9 @@ export function SpvSalesUI(){
             <Form.Item name={'salesId'} rules={[{ required: true }]} label="Sales" >
               <Select
                 options={salesData?.data?.map(e => ({ label: e.name, value: e.id }))}
+                showSearch
+                optionFilterProp="label"
+                disabled={detailTradeIn?.data?.salesStatus}
               />
             </Form.Item>
           </Form>

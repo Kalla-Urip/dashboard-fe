@@ -1,5 +1,6 @@
 import { useAuth } from "../../hooks/useAuth"
 import KacabUI from "./Kacab";
+import KacabNewUI from "./KacabNew";
 import MechanicDashboard from "./Mechanic";
 
 export default function Dashboard(){
@@ -10,6 +11,6 @@ export default function Dashboard(){
     case 'Bengkel':
       return <MechanicDashboard/>
     default:
-      return <KacabUI/>
+      return <KacabNewUI/>
   }
 }

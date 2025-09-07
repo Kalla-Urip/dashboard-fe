@@ -9,12 +9,18 @@ import RenderIf from "../../../components/RenderIf";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 
 const renderBadge = status => {
-  console.log(status)
-  if(status == 'Berhasil')
-    return <Tag color={'green'} >Berhasil</Tag>
-  if(status == 'Gagal')
-    return <Tag color={'red'} >Tidak Deal</Tag>
-  return <Tag color={'cyan'} >Sedang Diproses</Tag>
+
+  const colors = {
+    "Belum Dikerjakan": 'orange',
+    "Low": 'orange',
+    "Medium": 'cyan',
+    "Hot": "green",
+    "Deal": "green",
+    "Tidak Deal": "red",
+    "Taksasi": 'cyan'
+  }
+
+  return <Tag color={colors[status]} >{status}</Tag>
 }
 
 export function KacabUI(){
@@ -129,6 +135,7 @@ export function KacabUI(){
           />
         </Flex>
         <Table
+          bordered
           size="small"
           pagination={false}
           dataSource={tradeInData?.data}
@@ -164,58 +171,99 @@ export function KacabUI(){
             },
             {
               title: 'Tipe & Tahun',
-              render: val => `${val.type} - ${val.year}`
+              render: val => `${val.type} - ${val.year}`,
+              width: 150,
             },
             {
               title: 'Tanggal Diajukan',
               dataIndex: 'createdAt',
+              width: 150,
             },
             {
               title: 'Status Sales',
-              render: record => (
-                <>
-                  <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
-                    {record.spvSalesName}
-                  </Typography.Text>
-                  <RenderIf when={record.salesName} >
-                    {renderBadge(record.salesStatus)}
-                  </RenderIf>
-                  <RenderIf when={!record.salesName} >
-                    <Tag color="orange" style={{ marginTop: 5 }}  >
-                      Menunggu Assign
-                    </Tag>
-                  </RenderIf>
-                </>
-              )
+              children: [
+                {
+                  title: 'SPV',
+                  width: 150,
+                  align: 'center',
+                  render: record => (
+                    <>
+                      <Typography.Text style={{ display: 'block' }} >
+                        {record.spvSalesName}
+                      </Typography.Text>
+                    </>
+                  )
+                },
+                {
+                  title: 'Sales',
+                  width: 150,
+                  align: 'center',
+                  render: record => (
+                    <>
+                      <RenderIf when={record?.salesName} >
+                        <Typography.Text style={{ display: 'block' }} >
+                          {record.salesName}
+                        </Typography.Text>
+                        {renderBadge(record.salesStatus ?? "Belum Dikerjakan")}
+                      </RenderIf>
+                      <RenderIf when={!record.salesName} >
+                        <Tag color="orange" style={{ marginTop: 5 }}  >
+                          Sales Belum ditunjuk
+                        </Tag>
+                      </RenderIf>
+                    </>
+                  )
+                },
+              ]
             },
             {
               title: 'Status Trust',
-              render: record => (
-                <>
-                  <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
-                    {record.spvTrustName}
-                  </Typography.Text>
-                  <RenderIf when={record.trustName} >
-                    {renderBadge(record.trustStatus)}
-                  </RenderIf>
-                  <RenderIf when={!record.trustName} >
-                    <Tag color="orange" style={{ marginTop: 5 }}  >
-                      Menunggu Assign
-                    </Tag>
-                  </RenderIf>
-                </>
-              )
+              children: [
+                {
+                  title: 'SPV',
+                  width: 150,
+                  align: 'center',
+                  render: record => (
+                    <>
+                      <Typography.Text style={{ display: 'block' }} >
+                        {record.spvTrustName}
+                      </Typography.Text>
+                    </>
+                  )
+                },
+                {
+                  title: 'UA',
+                  width: 150,
+                  align: 'center',
+                  render: record => (
+                    <>
+                      <RenderIf when={record.trustName} >
+                        <Typography.Text style={{ display: 'block' }} >
+                          {record.trustName}
+                        </Typography.Text>
+                        {renderBadge(record?.trustStatus ?? "Belum Dikerjakan")}
+                      </RenderIf>
+                      <RenderIf when={!record.trustName} >
+                        <Tag color="orange" style={{ marginTop: 5 }}  >
+                          UA Belum ditunjuk
+                        </Tag>
+                      </RenderIf>
+                    </>
+                  )
+                }
+              ],
             },
             {
               className: 'last-cell-p',
               title: 'Aksi',
-              width: 110,
+              width: 80,
               fixed: 'right',
+              align: 'center',
               render: record => (
                 <Flex gap={10} >
-                  <Button onClick={() => setDrawerOpt({ id: record.id, open: true, action: 'Edit' })} variant="solid" style={{ backgroundColor: '#30B0C7', color: '#fff' }} >
+                  {/* <Button onClick={() => setDrawerOpt({ id: record.id, open: true, action: 'Edit' })} variant="solid" style={{ backgroundColor: '#30B0C7', color: '#fff' }} >
                     Edit
-                  </Button>
+                  </Button> */}
                   <Button onClick={() => setDrawerOpt({  id: record.id, open: true, action: 'Detail' })} type="primary" >
                     Detail
                   </Button>
