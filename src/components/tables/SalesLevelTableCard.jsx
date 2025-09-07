@@ -1,8 +1,20 @@
-import { Typography, Table } from "antd";
+import { Typography, Table, Empty } from "antd";
 
 const cardRadius = 6;
 
-export default function SalesLevelTableCard({ title, data, availableOptions }) {
+export default function SalesLevelTableCard({ 
+  title, 
+  data, 
+  availableOptions, 
+  selectedMonth, 
+  onMonthChange 
+}) {
+  const handleSelectChange = (e) => {
+    if (onMonthChange) {
+      onMonthChange(parseInt(e.target.value));
+    }
+  };
+
   const columns = [
     {
       title: 'No.',
@@ -135,9 +147,13 @@ export default function SalesLevelTableCard({ title, data, availableOptions }) {
           {title}
         </Typography.Title>
         <div style={{ marginLeft: 'auto' }}>
-          <select style={{ borderRadius: 8, padding: '4px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}>
+          <select 
+            style={{ borderRadius: 8, padding: '4px 12px', fontSize: 16, border: '1px solid #DFE3E8' }}
+            value={selectedMonth || availableOptions[0]?.value}
+            onChange={handleSelectChange}
+          >
             {availableOptions.map((option, index) => (
-              <option key={index} value={option}>{option}</option>
+              <option key={index} value={option.value || option}>{option.label || option}</option>
             ))}
           </select>
         </div>
@@ -145,52 +161,53 @@ export default function SalesLevelTableCard({ title, data, availableOptions }) {
       
       {/* Table */}
       <div style={{ flex: 1 }}>
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={{
-            pageSize: 4,
-            showSizeChanger: false,
-            showQuickJumper: false,
-            showTotal: false,
-            style: {
-              marginTop: 16,
-            },
-          }}
-          rowKey="no"
-          size="small"
-        />
+        {data && data.length > 0 ? (
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={{
+              pageSize: 4,
+              showSizeChanger: false,
+              showQuickJumper: false,
+              showTotal: false,
+              style: {
+                marginTop: 16,
+              },
+            }}
+            rowKey="no"
+            size="small"
+          />
+        ) : (
+          <div style={{ padding: '40px 0' }}>
+            <Empty 
+              description={
+                <div style={{ textAlign: 'center' }}>
+                  <Typography.Text style={{
+                    fontFamily: 'Lato',
+                    fontSize: 16,
+                    fontWeight: 400,
+                    color: '#637381',
+                    display: 'block'
+                  }}>
+                    Data tidak tersedia
+                  </Typography.Text>
+                  <Typography.Text style={{
+                    fontFamily: 'Lato',
+                    fontSize: 14,
+                    fontWeight: 400,
+                    color: '#919EAB',
+                    marginTop: 8,
+                    display: 'block'
+                  }}>
+                    Silakan pilih bulan lain
+                  </Typography.Text>
+                </div>
+              }
+            />
+          </div>
+        )}
       </div>
-      
-      <style jsx global>{`
-        .ant-table-thead > tr > th {
-          background-color: #00CA52 !important;
-          color: #fff !important;
-          font-family: 'Lato' !important;
-          font-size: 14px !important;
-          font-weight: 600 !important;
-          text-align: center !important;
-          border: none !important;
-        }
-        .ant-table-thead > tr > th:nth-child(1),
-        .ant-table-thead > tr > th:nth-child(2) {
-          text-align: left !important;
-        }
-        .ant-table-tbody > tr > td {
-          border-bottom: 1px solid #F2F4F7 !important;
-          padding: 12px 8px !important;
-        }
-        .ant-table-tbody > tr:hover > td {
-          background-color: #F9FAFB !important;
-        }
-        .ant-pagination-item-active {
-          background-color: #E8F5E8 !important;
-          border-color: #00CA52 !important;
-        }
-        .ant-pagination-item-active a {
-          color: #00CA52 !important;
-        }
-      `}</style>
+     
     </div>
   );
 }
