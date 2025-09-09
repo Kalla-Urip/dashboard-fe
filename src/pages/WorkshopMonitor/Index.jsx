@@ -228,13 +228,13 @@ export default function WorkshopMonitorIndex(){
             {
               title: 'Tipe Tahun',
               dataIndex: 'typeYear',
-              width: 140,
+              width: 210,
             },
             {
               title: 'Nomor Rangka',
               dataIndex: 'chassisNumber',
               align: 'center',
-              width: 160,
+              width: 165,
             },
             {
               title: 'Transfer Sales',
