@@ -8,6 +8,8 @@ import { userService } from "../../../services/user.service";
 import RenderIf from "../../../components/RenderIf";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 
+const colorMap = { 'A': 'green', 'B': 'geekblue', 'C': 'orange', 'D': 'red' }
+
 const renderBadge = status => {
 
   const colors = {
@@ -169,6 +171,17 @@ export function SpvTrustUI(){
               render: val => `${val.type} - ${val.year}`
             },
             {
+              title: 'Grade Mobil',
+              width: 250,
+              align: 'center',
+              render: val => (
+                <>
+                  <Tag color={colorMap[val?.grade?.grade]} >{val?.grade?.grade ?? '-'}</Tag>
+                  {val?.grade?.reason}
+                </>
+              )
+            },
+            {
               title: 'Tanggal Diajukan',
               dataIndex: 'createdAt',
             },
@@ -257,6 +270,19 @@ export function SpvTrustUI(){
             {
               label: 'Trust',
               children: detailTradeIn?.data?.trustName
+            },
+            {
+              label: 'Grade Mobil',
+              children: (
+                <>
+                  <Tag color={colorMap[detailTradeIn?.data?.grade?.grade]} >{detailTradeIn?.data?.grade?.grade ?? '-'}</Tag>
+                  {detailTradeIn?.data?.grade?.reason}
+                </>
+              )
+            },
+            {
+              label: 'Penjelasan',
+              children: detailTradeIn?.data?.grade?.narrative
             },
           ]}
         />

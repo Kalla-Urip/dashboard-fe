@@ -42,7 +42,7 @@ export default function DashboardSalesMetricsSection() {
 
   // Transform Sales Data by Status for pie chart
   const transformSalesDataByStatus = (apiData) => {
-    if (!apiData?.data || apiData.data.length === 0) {
+    if (!apiData?.data || apiData.data?.length === 0) {
       return []; // Return empty array for no data case
     }
     
@@ -73,7 +73,7 @@ export default function DashboardSalesMetricsSection() {
       .filter(item => item.sales !== 'sales') // Remove header row
       .map((item, index) => ({
         no: index + 1,
-        namaSales: item.sales.length > 10 ? item.sales.substring(0, 10) + '...' : item.sales,
+        namaSales: item.sales?.length > 10 ? item.sales.substring(0, 10) + '...' : item.sales,
         deal: item.deal || 0,
         hot: item.hot || 0,
         medium: item.medium || 0,

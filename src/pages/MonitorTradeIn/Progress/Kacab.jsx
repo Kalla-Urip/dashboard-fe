@@ -9,6 +9,8 @@ import RenderIf from "../../../components/RenderIf";
 import { useTableHeight } from "../../../hooks/useTableHeight";
 import pallete from "../../../utils/pallete";
 
+const colorMap = { 'A': 'green', 'B': 'geekblue', 'C': 'orange', 'D': 'red' }
+
 const renderBadge = status => {
 
   const colors = {
@@ -174,6 +176,17 @@ export function KacabUI(){
               title: 'Tipe & Tahun',
               width: 150,
               render: val => `${val.type} - ${val.year}`
+            },
+            {
+              title: 'Grade Mobil',
+              width: 250,
+              align: 'center',
+              render: val => (
+                <>
+                  <Tag color={colorMap[val?.grade?.grade]} >{val?.grade?.grade ?? '-'}</Tag>
+                  {val?.grade?.reason}
+                </>
+              )
             },
             {
               title: 'Tanggal Diajukan',

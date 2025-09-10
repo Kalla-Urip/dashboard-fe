@@ -1,10 +1,12 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button, Card, Descriptions, Drawer, Flex, Form, Input, message, Pagination, Select, Table, Typography } from "antd";
+import { Button, Card, Descriptions, Drawer, Flex, Form, Input, message, Pagination, Select, Table, Tag, Typography } from "antd";
 import { useEffect, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import { tradeInService } from "../../../services/tradeIn.service";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { userService } from "../../../services/user.service";
+
+const colorMap = { 'A': 'green', 'B': 'geekblue', 'C': 'orange', 'D': 'red' }
 
 export function SpvTrustUI(){
 
@@ -137,6 +139,12 @@ export function SpvTrustUI(){
               render: val => `${val.type} - ${val.year}`
             },
             {
+              title: 'Grade Mobil',
+              align: 'center',
+              width: 90,
+              render: val => <Tag color={colorMap[val.grade?.grade]} >{val.grade?.grade ?? '-'}</Tag>
+            },
+            {
               title: 'No Whatsapp',
               dataIndex: 'ownerPhone',
             },
@@ -203,6 +211,19 @@ export function SpvTrustUI(){
             {
               label: 'Tanggal Diajukan',
               children: drawerOpt.data?.createdAt
+            },
+            {
+              label: 'Grade Mobil',
+              children: (
+                <>
+                  <Tag color={colorMap[drawerOpt?.data?.grade?.grade]} >{drawerOpt?.data?.grade?.grade ?? '-'}</Tag>
+                  {drawerOpt?.data?.grade?.reason}
+                </>
+              )
+            },
+            {
+              label: 'Penjelasan',
+              children: drawerOpt?.data?.grade?.narrative
             },
           ]}
         />

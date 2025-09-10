@@ -182,6 +182,29 @@ export default function WorkshopMonitorDetail(){
           column={2}
           items={data && createBodyConditionData(data.bodyCondition)}
         />
+        <Typography.Text style={{ display: 'inline-block', margin: '15px 0 10px 0' }} >
+          Grade Mobil
+        </Typography.Text>
+        <Descriptions
+          bordered
+          size="small"
+          styles={descStyle}
+          column={2}
+          items={data && [
+            {
+              label: 'Grade',
+              children: data.grade?.grade
+            },
+            {
+              label: 'Alasan',
+              children: data.grade?.reason
+            },
+            {
+              label: 'Penjelasan',
+              children: data.grade?.narrative
+            },
+          ]}
+        />
       </Card>
     </Flex>
   )
