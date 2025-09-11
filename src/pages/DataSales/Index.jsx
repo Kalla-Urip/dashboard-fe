@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Button, Card, Flex, Input, message, Modal, Pagination, Select, Table, Typography, Upload } from "antd";
-import { keepPreviousData, useMutation, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTableHeight } from "../../hooks/useTableHeight";
 import { useNavigate } from "react-router";
 import { salesService } from "../../services/sales.service";
 import { userService } from "../../services/user.service";
 
 export default function DataSalesIndex(){
+
+  const queryClient = useQueryClient()
 
   const navigate = useNavigate()
   const [keyword, setKeyword] = useState("");
@@ -40,6 +42,7 @@ export default function DataSalesIndex(){
     mutationFn: () => salesService.import(excelUpload[0]),
     onSuccess: () => {
       handleCloseModal()
+      queryClient.invalidateQueries(['sales', 'sales-user'])
       messageApi.success("Data berhasil diimport")
     }
   })
