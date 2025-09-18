@@ -73,4 +73,11 @@ export const dashboardService = {
     })
     return response.data
   },
+  getServiceAdvisorMetrics: async (params = {}) => {
+    // Expected API response shape: { data: [{ serviceAdvisor: string, total: number|string }, ...] }
+    const response = await axiosInstance.get('/dashboard/sa-summary', {
+      params,
+    })
+    return response.data
+  },
 }
