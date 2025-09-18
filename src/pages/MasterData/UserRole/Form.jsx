@@ -14,6 +14,7 @@ const employeeType = [
   'Trust',
   'Admin Bengkel',
   'Bengkel',
+  'SA'
 ]
 
 export default function UserRoleForm(){

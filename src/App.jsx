@@ -37,6 +37,7 @@ import CustomerDataForm from "./pages/CustomerData/Form"
 import UCareSales from "./pages/Ucare/Sales"
 import UCareGeneralRepair from "./pages/Ucare/GeneralRepair"
 import VehicleModelIndex from "./pages/MasterData/VehicleModel/Index"
+import WorkshopMonitorSAIndex from "./pages/WorkshopMonitorSa/Index"
 
 const queryClient = new QueryClient()
 
@@ -85,6 +86,9 @@ function App() {
               <Route path="workshop-monitor" >
                 <Route index element={<WorkshopMonitorIndex/>} />
                 <Route path="detail/:id" element={<WorkshopMonitorDetail/>} />
+              </Route>
+              <Route path="workshop-monitor-sa" >
+                <Route index element={<WorkshopMonitorSAIndex/>} />
               </Route>
               <Route path="data-trust" >
                 <Route index element={<DataTrustIndex/>} />

@@ -35,6 +35,19 @@ const branchManagerMenu = collapse => [
     ),
   },
   {
+    key: "workshop-monitor-sa",
+    allowedRoles: ['Super Admin', 'SA', 'Admin Bengkel'],
+    label: <Link to={'/workshop-monitor-sa'} >Monitoring Bengkel (SA)</Link>,
+    icon: (
+      <Icon
+        icon="hugeicons:repair"
+        style={{ marginBottom: -1, marginLeft: -5 }}
+        width="20"
+        height="20"
+      />
+    ),
+  },
+  {
     key: "cross-selling",
     label: "Cross Selling",
     permission: 'Monitor Trade In',
