@@ -150,6 +150,11 @@ export function KacabUI(){
               render: val => <Tag color={colorMap[val.grade?.grade]} >{val.grade?.grade ?? '-'}</Tag>
             },
             {
+              title: 'SA',
+              dataIndex: 'sa',
+              width: 120,
+            },
+            {
               title: 'No Whatsapp',
               dataIndex: 'ownerPhone',
             },
