@@ -2,7 +2,7 @@ import { Typography, Table, Empty } from "antd";
 
 const cardRadius = 6;
 
-export default function TradeInLevelTableCard({ 
+export default function SAMetricTableCard({ 
   title, 
   data, 
   availableOptions, 
@@ -17,9 +17,9 @@ export default function TradeInLevelTableCard({
 
   const columns = [
     {
-      title: "No.",
-      dataIndex: "no",
-      key: "no",
+      title: 'No.',
+      dataIndex: 'no',
+      key: 'no',
       width: 64,
       align: 'center',
       render: (value) => (
@@ -29,9 +29,9 @@ export default function TradeInLevelTableCard({
       ),
     },
     {
-      title: 'Nama Trust',
-      dataIndex: 'namaTrust',
-      key: 'namaTrust',
+      title: 'Nama SA',
+      dataIndex: 'namaSA',
+      key: 'namaSA',
       align: 'left',
       render: (text) => (
         <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 400, color: '#000' }}>
@@ -40,42 +40,9 @@ export default function TradeInLevelTableCard({
       ),
     },
     {
-      title: 'Deal',
-      dataIndex: 'deal',
-      key: 'deal',
-      align: 'center',
-      render: (value) => (
-        <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: '#000' }}>
-          {value}
-        </span>
-      ),
-    },
-    {
-      title: 'Taksasi',
-      dataIndex: 'taksasi',
-      key: 'taksasi',
-      align: 'center',
-      render: (value) => (
-        <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: '#000' }}>
-          {value}
-        </span>
-      ),
-    },
-    {
-      title: 'Medium',
-      dataIndex: 'medium',
-      key: 'medium',
-      align: 'center',
-      render: (value) => (
-        <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: '#000' }}>
-          {value}
-        </span>
-      ),
-    },
-    {
-      title: 'Tidak Deal',
-      dataIndex: 'tidakDeal',
-      key: 'tidakDeal',
+      title: 'Jumlah',
+      dataIndex: 'jumlah',
+      key: 'jumlah',
       align: 'center',
       render: (value) => (
         <span style={{ fontFamily: 'Lato', fontSize: 14, fontWeight: 600, color: '#000' }}>
