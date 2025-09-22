@@ -195,6 +195,12 @@ export function KacabUI(){
               align: 'center',
             },
             {
+              title: 'SA',
+              dataIndex: 'sa',
+              width: 120,
+              align: 'center'
+            },
+            {
               title: 'Status Sales',
               children: [
                 {
