@@ -5,6 +5,7 @@ import useDebounce from "../../hooks/useDebounce";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { crossSellingService } from "../../services/crossSelling.service";
 import { useTableHeight } from "../../hooks/useTableHeight";
+import { downloadBlob } from "../../utils/download";
 
 export default function CrossSellingTire(){
 
@@ -61,6 +62,14 @@ export default function CrossSellingTire(){
     }
   })
 
+  const exportMutation = useMutation({
+    mutationFn: () => crossSellingService.exportAllData({ type: 'Tire' }),
+    onSuccess: ({ blob, filename }) => {
+      downloadBlob(blob, filename)
+      messageApi.success("Data berhasil diexport")
+    }
+  })
+
   const pagination = crossSellingData?.pagination || { total: 0, page: 1 };
 
   const handleChangePage = (page, pageSize) => {
@@ -112,7 +121,7 @@ export default function CrossSellingTire(){
       {contextHolder}
       {/* {modalHolder} */}
       <Card>
-        <Flex gap={20} style={{ marginBottom: 20 }} >
+        <Flex gap={20} style={{ marginBottom: 20 }} justify="space-between" >
           <Input
             placeholder="cari..."
             style={{ width: 230, marginRight: 'auto' }}
@@ -125,6 +134,9 @@ export default function CrossSellingTire(){
             onChange={e => setKeyword(e.target.value)}
             value={keyword}
           />
+          <Button onClick={exportMutation.mutate} variant="solid" color="primary" >
+            Export
+          </Button>
         </Flex>
         <Table
           size="small"

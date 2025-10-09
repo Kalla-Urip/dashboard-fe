@@ -20,6 +20,10 @@ export const customerService = {
     const response = await axiosInstance.put(`/customer/${data.id}`, data)
     return response.data
   },
+  updateFromWAC: async (data) => {
+    const response = await axiosInstance.put(`/customer/${data.id}/from-wac`, data)
+    return response.data
+  },
   delete: async (id) => {
     const response = await axiosInstance.delete(`/customer/${id}`)
     return response.data

@@ -1,4 +1,5 @@
 import axiosInstance from "../utils/axios"
+import { parseFilenameFromDisposition } from "../utils/download"
 
 export const crossSellingService = {
   getTireData: async (params = {}) => {
@@ -26,5 +27,14 @@ export const crossSellingService = {
   delete: async (id) => {
     const response = await axiosInstance.delete(`/cross-selling/${id}`)
     return response.data
+  },
+  exportAllData: async (params = {}) => {
+    const response = await axiosInstance.get(`/cross-selling/export`, { 
+      params,
+      responseType: 'blob'
+    })
+    const disposition = response.headers["content-disposition"];
+    const filename = parseFilenameFromDisposition(disposition) || "cross-selling.xlsx";
+    return { blob: response.data, filename };
   },
 }
