@@ -328,7 +328,7 @@ export default function WorkshopMonitorIndex(){
                   <Button  onClick={() => navigate(`/workshop-monitor/detail/${record.id}`)} type="primary" >
                     Detail
                   </Button>
-                  <Button
+                  {/* <Button
                     variant="outlined"
                     color="primary"
                     onClick={() => changeStatus(record)}
@@ -338,7 +338,7 @@ export default function WorkshopMonitorIndex(){
                         width={18}
                       />
                     }
-                  />
+                  /> */}
                 </Flex>
               )
             },
