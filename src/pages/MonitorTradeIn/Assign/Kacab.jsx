@@ -80,6 +80,11 @@ export function KacabUI(){
     setDrawerOpt({ open: false, data: null })
   }
 
+  const handleOpenDrawer = record => {
+    form.setFieldsValue(record)
+    setDrawerOpt({ data: record, open: true })
+  }
+
   return (
     <>
       {contextHolder}
@@ -168,7 +173,7 @@ export function KacabUI(){
               width: 110,
               fixed: 'right',
               render: record => (
-                <Button onClick={() => setDrawerOpt({ data: record, open: true })} type="primary" >
+                <Button onClick={() => handleOpenDrawer(record)} type="primary" >
                   Detail
                 </Button>
               )
