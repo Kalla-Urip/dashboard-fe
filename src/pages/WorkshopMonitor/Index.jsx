@@ -1,4 +1,4 @@
-import { Button, Card, Dropdown, Flex, Form, Input, message, Modal, Pagination, Popover, Select, Table, Tag, Typography, Upload } from "antd";
+import { Button, Card, Drawer, Dropdown, Flex, Form, Input, message, Modal, Pagination, Popover, Select, Table, Tag, Typography, Upload } from "antd";
 import { useEffect, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -23,6 +23,13 @@ export default function WorkshopMonitorIndex(){
   const tableHeight = useTableHeight()
   const debouncedKeyword = useDebounce(keyword, 500);
   const [loadingId, setLoadingId] = useState()
+
+  const [statusForm] = Form.useForm()
+
+  const [drawerOpt, setDrawerOpt] = useState({
+    open: false,
+    id: null
+  })
 
   const [dateFilter, setDateFilter] = useState({
     startDate: null,
@@ -101,20 +108,32 @@ export default function WorkshopMonitorIndex(){
     changeMutation.mutate({ id, MechanicId: value ? value : null })
   }
 
+  const changeStatus = (record) => {
+    statusForm.setFieldsValue(record)
+    setDrawerOpt({ open: true, id: record.id })
+  }
+
+  const handleChangeStatus = async (values) => {
+    setLoadingId(drawerOpt.id)
+    const res = await changeMutation.mutateAsync({id: drawerOpt.id, ...values })
+    console.log(res)
+    handleCloseStatusDrawer()
+  }
+
   const handleCloseModal = () => {
     setOpenModal(false)
     setExcelUpload([])
   }
 
-  // const handleFilterDate = () => {
-  //   queryClient.invalidateQueries('service-data')
-  //   setPopover(false)
-  // }
-
   const handleResetFilterDate = () => {
     setDateFilter({ startDate: null, endDate: null })
     queryClient.invalidateQueries('service-data')
     setPopover(false)
+  }
+
+  const handleCloseStatusDrawer = () => {
+    setDrawerOpt({ open: false, id: null })
+    statusForm.resetFields()
   }
 
   return (
@@ -252,6 +271,16 @@ export default function WorkshopMonitorIndex(){
               }
             },
             {
+              title: 'Posisi Mobil',
+              dataIndex: 'vehicleStatus',
+              width: 180,
+            },
+            {
+              title: 'Keterangan Pengerjaan',
+              dataIndex: 'description',
+              width: 180,
+            },
+            {
               title: 'Petugas',
               dataIndex: 'mechanic',
               align: 'center',
@@ -292,12 +321,25 @@ export default function WorkshopMonitorIndex(){
             {
               className: 'last-cell-p',
               title: 'Aksi',
-              width: 90,
+              width: 145,
               fixed: 'right',
               render: (record) => (
-                <Button onClick={() => navigate(`/workshop-monitor/detail/${record.id}`)} type="primary" >
-                  Detail
-                </Button>
+                <Flex gap={10} >
+                  <Button  onClick={() => navigate(`/workshop-monitor/detail/${record.id}`)} type="primary" >
+                    Detail
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => changeStatus(record)}
+                    icon={
+                      <Icon
+                        icon={'solar:clipboard-list-bold-duotone'}
+                        width={18}
+                      />
+                    }
+                  />
+                </Flex>
               )
             },
           ]}
@@ -348,6 +390,34 @@ export default function WorkshopMonitorIndex(){
           </Typography.Text>
         </Upload.Dragger>
       </Modal>
+      <Drawer
+        open={drawerOpt.open}
+        title="Status Kendaraan & Catatan tambahan"
+        footer={
+          <Flex gap={10} >
+            <Button onClick={handleCloseStatusDrawer} block color="primary" variant="outlined" >
+              Kembali
+            </Button>
+            <Button onClick={statusForm.submit} block color="primary" variant="solid" >
+              Simpan
+            </Button>
+          </Flex>
+        }
+        onClose={handleCloseStatusDrawer}
+      >
+        <Form
+          layout="vertical"
+          form={statusForm}
+          onFinish={handleChangeStatus}
+        >
+          <Form.Item name={'vehicleStatus'} label="Posisi Kendaraan" >
+            <Input.TextArea/>
+          </Form.Item>
+          <Form.Item name={'description'} label="Status Pengerjaan" >
+            <Input.TextArea/>
+          </Form.Item>
+        </Form>
+      </Drawer>
     </>
   )
 }

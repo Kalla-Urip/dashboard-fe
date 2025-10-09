@@ -241,7 +241,7 @@ export function KacabUI(){
           layout="vertical" 
           onFinish={assignMutation.mutate}
         >
-          <Form.Item name={'spvTrustId'} rules={[{ required: true }]} label="SPV Trust" >
+          <Form.Item name={'spvTrustId'} label="SPV Trust" >
             <Select
               options={spvTrustData?.data?.map(e => ({ label: e.name, value: e.id }))}
             />
