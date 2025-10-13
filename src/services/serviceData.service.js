@@ -25,6 +25,10 @@ export const serviceDataService = {
     const response = await axiosInstance.put(`/service-data/${data.id}`, data)
     return response.data
   },
+  changeStatus: async (data) => {
+    const response = await axiosInstance.put(`/service-data/${data.id}/status`, data)
+    return response.data
+  },
   import: async (file) => {
     const response = await axiosInstance.postForm('/service-data/import', { file })
     return response.data

@@ -1,4 +1,4 @@
-import { Button, Card, Drawer, Dropdown, Flex, Form, Input, message, Modal, Pagination, Popover, Select, Table, Tag, Typography, Upload } from "antd";
+import { Button, Card, Divider, Drawer, Dropdown, Flex, Form, Input, message, Modal, Pagination, Popover, Select, Steps, Table, Tag, Typography, Upload } from "antd";
 import { useEffect, useState } from "react";
 import useDebounce from "../../hooks/useDebounce";
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -8,6 +8,7 @@ import { serviceDataService } from "../../services/serviceData.service";
 import { useTableHeight } from "../../hooks/useTableHeight";
 import { stallService } from "../../services/stall.service";
 import { userService } from "../../services/user.service";
+import { format } from "date-fns";
 
 export default function WorkshopMonitorIndex(){
 
@@ -17,6 +18,10 @@ export default function WorkshopMonitorIndex(){
   const [messageApi, contextHolder] = message.useMessage()
 
   const [excelUpload, setExcelUpload] = useState([])
+  const [vehicleStatus, setVehicleStatus] = useState({
+    status: {},
+    index: 0
+  })
   const [openModal,setOpenModal] = useState(false)
   const [popover,setPopover] = useState(false)
   const [keyword, setKeyword] = useState("");
@@ -98,6 +103,19 @@ export default function WorkshopMonitorIndex(){
     } 
   })
 
+  const changeStatusMutation = useMutation({
+    mutationFn: (val) => serviceDataService.changeStatus(val),
+    onSuccess: () => {
+      messageApi.success("Data berhasil disimpan")
+      queryClient.invalidateQueries('service-data')
+      setLoadingId(null)
+    },
+    onError: ({ response }) => {
+      const { data } = response
+      messageApi.error(data.message || "Terjadi Kesalahan")
+    }
+  })
+
   const handleChangeStall = (id, value) => {
     setLoadingId(id)
     changeMutation.mutate({ id, StallId: value ? value : null })
@@ -111,11 +129,36 @@ export default function WorkshopMonitorIndex(){
   const changeStatus = (record) => {
     statusForm.setFieldsValue(record)
     setDrawerOpt({ open: true, id: record.id })
+    const stats = {
+      pending: record.statusses.find(e => e.status == 'Menunggu Konfirmasi').createdAt,
+      confirmed: record.statusses.find(e => e.status == 'Dikonfirmasi')?.createdAt || null,
+      onProggress: record.statusses.find(e => e.status == 'Mobil Diserahkan')?.createdAt || null,
+      finish: record.statusses.find(e => e.status == 'Service Selesai')?.createdAt || null,
+    }
+    let statsIndex = 0
+    switch (record.status) {
+      case 'Menunggu Konfirmasi':
+        statsIndex = 0
+        break;
+      case 'Dikonfirmasi':
+        statsIndex = 1
+        break;
+      case 'Mobil Diserahkan':
+        statsIndex = 2
+        break;
+      case 'Service Selesai':
+        statsIndex = 3
+        break;
+    }
+    setVehicleStatus({
+      status: stats,
+      index: statsIndex
+    })
   }
 
   const handleChangeStatus = async (values) => {
     setLoadingId(drawerOpt.id)
-    const res = await changeMutation.mutateAsync({id: drawerOpt.id, ...values })
+    const res = await changeStatusMutation.mutateAsync({id: drawerOpt.id, ...values })
     console.log(res)
     handleCloseStatusDrawer()
   }
@@ -133,6 +176,10 @@ export default function WorkshopMonitorIndex(){
 
   const handleCloseStatusDrawer = () => {
     setDrawerOpt({ open: false, id: null })
+    setVehicleStatus({
+      index: 0,
+      status: {}
+    })
     statusForm.resetFields()
   }
 
@@ -271,9 +318,20 @@ export default function WorkshopMonitorIndex(){
               }
             },
             {
-              title: 'Posisi Mobil',
-              dataIndex: 'vehicleStatus',
+              title: 'Status Kendaraan',
+              dataIndex: 'status',
               width: 180,
+              render: val => {
+                const color = {
+                  'Booking Service': 'blue',
+                  'Konfirmasi Booking Service': 'blue',
+                  'Penerimaan Service': 'cyan',
+                  'Proses Service': 'cyan',
+                  'Mobil Dicuci': 'green',
+                  'Penyerahan Kendaraan': 'green',
+                }
+                return <Tag color={color[val]} >{val}</Tag>
+              }
             },
             {
               title: 'Keterangan Pengerjaan',
@@ -328,7 +386,7 @@ export default function WorkshopMonitorIndex(){
                   <Button  onClick={() => navigate(`/workshop-monitor/detail/${record.id}`)} type="primary" >
                     Detail
                   </Button>
-                  {/* <Button
+                  <Button
                     variant="outlined"
                     color="primary"
                     onClick={() => changeStatus(record)}
@@ -338,7 +396,7 @@ export default function WorkshopMonitorIndex(){
                         width={18}
                       />
                     }
-                  /> */}
+                  />
                 </Flex>
               )
             },
@@ -410,8 +468,17 @@ export default function WorkshopMonitorIndex(){
           form={statusForm}
           onFinish={handleChangeStatus}
         >
-          <Form.Item name={'vehicleStatus'} label="Posisi Kendaraan" >
-            <Input.TextArea/>
+          <Form.Item name={'status'} label="Status Kendaraan" >
+            <Select
+              options={[
+                'Booking Service',
+                'Konfirmasi Booking Service',
+                'Penerimaan Service',
+                'Proses Service',
+                'Mobil Dicuci',
+                'Penyerahan Kendaraan'
+              ].map(e => ({ label: e, value: e }))}
+            />
           </Form.Item>
           <Form.Item name={'description'} label="Status Pengerjaan" >
             <Input.TextArea/>
