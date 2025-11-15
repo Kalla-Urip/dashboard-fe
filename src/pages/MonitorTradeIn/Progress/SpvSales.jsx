@@ -186,6 +186,43 @@ export function SpvSalesUI(){
               )
             },
             {
+              title: 'Status Trust',
+              children: [
+                {
+                  title: 'SPV',
+                  width: 150,
+                  align: 'center',
+                  render: record => (
+                    <>
+                      <Typography.Text style={{ display: 'block' }} >
+                        {record.spvTrustName}
+                      </Typography.Text>
+                    </>
+                  )
+                },
+                {
+                  title: 'UA',
+                  width: 150,
+                  align: 'center',
+                  render: record => (
+                    <>
+                      <RenderIf when={record.trustName} >
+                        <Typography.Text style={{ display: 'block' }} >
+                          {record.trustName}
+                        </Typography.Text>
+                        {renderBadge(record?.trustStatus ?? "Belum Dikerjakan")}
+                      </RenderIf>
+                      <RenderIf when={!record.trustName} >
+                        <Tag color="orange" style={{ marginTop: 5 }}  >
+                          UA Belum ditunjuk
+                        </Tag>
+                      </RenderIf>
+                    </>
+                  )
+                }
+              ],
+            },
+            {
               className: 'last-cell-p',
               title: 'Aksi',
               // width: 110,

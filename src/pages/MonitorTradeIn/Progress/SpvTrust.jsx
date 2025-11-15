@@ -168,7 +168,8 @@ export function SpvTrustUI(){
             },
             {
               title: 'Tipe & Tahun',
-              render: val => `${val.type} - ${val.year}`
+              render: val => `${val.type} - ${val.year}`,
+              width: 200
             },
             {
               title: 'Grade Mobil',
@@ -184,9 +185,11 @@ export function SpvTrustUI(){
             {
               title: 'Tanggal Diajukan',
               dataIndex: 'createdAt',
+              width: 120,
             },
             {
-              title: 'Status Sales',
+              title: 'Status Trust',
+              width: 180,
               render: record => (
                 <>
                   <Typography.Text style={{ display: 'block', fontWeight: 600 }} >
@@ -198,6 +201,43 @@ export function SpvTrustUI(){
                   {renderBadge(record.trustStatus ?? "Belum Dikerjakan")}
                 </>
               )
+            },
+            {
+              title: 'Status Sales',
+              children: [
+                {
+                  title: 'SPV',
+                  width: 150,
+                  align: 'center',
+                  render: record => (
+                    <>
+                      <Typography.Text style={{ display: 'block' }} >
+                        {record.spvSalesName}
+                      </Typography.Text>
+                    </>
+                  )
+                },
+                {
+                  title: 'Sales',
+                  width: 150,
+                  align: 'center',
+                  render: record => (
+                    <>
+                      <RenderIf when={record?.salesName} >
+                        <Typography.Text style={{ display: 'block' }} >
+                          {record.salesName}
+                        </Typography.Text>
+                        {renderBadge(record.salesStatus ?? "Belum Dikerjakan")}
+                      </RenderIf>
+                      <RenderIf when={!record.salesName} >
+                        <Tag color="orange" style={{ marginTop: 5 }}  >
+                          Sales Belum ditunjuk
+                        </Tag>
+                      </RenderIf>
+                    </>
+                  )
+                },
+              ]
             },
             {
               className: 'last-cell-p',
