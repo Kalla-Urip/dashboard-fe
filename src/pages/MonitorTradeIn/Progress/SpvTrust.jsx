@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Badge, Button, Card, Descriptions, Drawer, Flex, Form, Input, message, Pagination, Select, Table, Tag, Typography } from "antd";
+import { Badge, Button, Card, Col, Descriptions, Drawer, Flex, Form, Input, message, Pagination, Popover, Row, Select, Table, Tag, Typography } from "antd";
 import { useEffect, useState } from "react";
 import useDebounce from "../../../hooks/useDebounce";
 import { tradeInService } from "../../../services/tradeIn.service";
@@ -7,6 +7,9 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { userService } from "../../../services/user.service";
 import RenderIf from "../../../components/RenderIf";
 import { useTableHeight } from "../../../hooks/useTableHeight";
+import SourceTradeInChart from "../../../components/charts/SourceTradeInChart";
+import SalesTradeInChart from "../../../components/charts/SalesTradeInChart";
+import UATradeInChart from "../../../components/charts/UATradeInChart copy";
 
 const colorMap = { 'A': 'green', 'B': 'geekblue', 'C': 'orange', 'D': 'red' }
 
@@ -36,6 +39,17 @@ export function SpvTrustUI(){
   const [keyword, setKeyword] = useState("");
   const debouncedKeyword = useDebounce(keyword, 500);
   const [source, setSource] = useState('')
+  const [popover,setPopover] = useState(false)
+  const [statisticPopover,setStatisticPopover] = useState(false)
+  const [statisticFilter, setStatisticFilter] = useState({
+    startDate: null,
+    endDate: null,
+    source: null
+  })
+  const [dateFilter, setDateFilter] = useState({
+    startDate: null,
+    endDate: null,
+  })
   const [drawerOpt, setDrawerOpt] = useState({
     action: null,
     id: null,
@@ -57,9 +71,16 @@ export function SpvTrustUI(){
   }, [debouncedKeyword, source]);
 
   const { data: tradeInData , isLoading, isRefetching } = useQuery({
-    queryKey: ['tradein', dataParams],
-    queryFn: () => tradeInService.getProgressData(dataParams),
+    queryKey: ['tradein', dataParams, dateFilter],
+    queryFn: () => tradeInService.getProgressData({...dataParams, ...dateFilter}),
     placeholderData: keepPreviousData,
+  })
+
+  const { data: statistic  } = useQuery({
+    queryKey: ['statistic', statisticFilter],
+    queryFn: () => tradeInService.getStatistic(statisticFilter),
+    placeholderData: keepPreviousData,
+    select: ({ data }) => data
   })
 
   const { data: detailTradeIn } = useQuery({
@@ -106,9 +127,89 @@ export function SpvTrustUI(){
     setDrawerOpt({ open: false, data: null })
   }
 
+  const handleResetFilterDate = () => {
+    setDateFilter({ startDate: null, endDate: null })
+    queryClient.invalidateQueries('service-data')
+    setPopover(false)
+  }
+
   return (
     <>
       {contextHolder}
+      <Card
+        title={`Statistik : ${statistic?.salesStatus?.totalTrade} Trade In`}
+        style={{ marginBottom: 20 }}
+        extra={
+          <Flex gap={20} >
+            <Popover
+              placement="bottomRight"
+              open={statisticPopover}
+              arrow={false}
+              trigger={'click'}
+              styles={{
+                body: {
+                  width: 240
+                }
+              }}
+              content={
+                <>
+                  <Form.Item style={{ margin: 0, marginBottom: 10 }} label="Mulai" layout="vertical" >
+                    <Input
+                      type="date"
+                      value={statisticFilter.startDate}
+                      onChange={e => setStatisticFilter({ ...statisticFilter, startDate: e.target.value })}
+                    />
+                  </Form.Item>
+                  <Form.Item style={{ margin: 0, marginBottom: 10 }} label="Sampai" layout="vertical" >
+                    <Input
+                      type="date"
+                      value={statisticFilter.endDate}
+                      onChange={e => setStatisticFilter({ ...statisticFilter, endDate: e.target.value })}
+                    />
+                  </Form.Item>
+                  <Flex gap={10} style={{ marginTop: 20 }} >
+                    <Button onClick={() => setStatisticFilter({ ...statisticFilter, startDate: null, endDate: null })} block variant="outlined" color="danger" >
+                      Reset
+                    </Button>
+                  </Flex>
+                </>
+              }
+            >
+              <Button onClick={() => setStatisticPopover(!statisticPopover)} variant="outlined" color="primary" >
+                Filter Tanggal
+              </Button>
+            </Popover>
+            <Select
+              placeholder="Sumber"
+              style={{ width: 180 }}
+              options={['Service', 'Customer'].map(e => ({ label: e, value: e }))}
+              allowClear
+              onChange={(e) => setStatisticFilter({ ...statisticFilter, source: e })}
+            />
+          </Flex>
+        }
+      >
+        <Row>
+          <Col span={8} style={{ height: 220 }} >
+            <Typography.Title level={5} >Sumber Trade In</Typography.Title>
+            <SourceTradeInChart
+              data={statistic}
+            />
+          </Col>
+          <Col span={8} style={{ height: 220 }} >
+            <Typography.Title level={5} >Sales</Typography.Title>
+            <SalesTradeInChart
+              data={statistic}
+            />
+          </Col>
+          <Col span={8} style={{ height: 220 }} >
+            <Typography.Title level={5} >UA</Typography.Title>
+            <UATradeInChart
+              data={statistic}
+            />
+          </Col>
+        </Row>
+      </Card>
       <Card>
         <Flex gap={20} style={{ marginBottom: 20 }} >
           <Input
@@ -123,6 +224,44 @@ export function SpvTrustUI(){
             onChange={e => setKeyword(e.target.value)}
             value={keyword}
           />
+          <Popover
+            placement="bottomRight"
+            open={popover}
+            arrow={false}
+            trigger={'click'}
+            styles={{
+              body: {
+                width: 240
+              }
+            }}
+            content={
+              <>
+                  <Form.Item style={{ margin: 0, marginBottom: 10 }} label="Mulai" layout="vertical" >
+                    <Input
+                      type="date"
+                      value={dateFilter.startDate}
+                      onChange={e => setDateFilter({ ...dateFilter, startDate: e.target.value })}
+                    />
+                  </Form.Item>
+                  <Form.Item style={{ margin: 0, marginBottom: 10 }} label="Sampai" layout="vertical" >
+                    <Input
+                      type="date"
+                      value={dateFilter.endDate}
+                      onChange={e => setDateFilter({ ...dateFilter, endDate: e.target.value })}
+                    />
+                  </Form.Item>
+                  <Flex gap={10} style={{ marginTop: 20 }} >
+                    <Button onClick={handleResetFilterDate} block variant="outlined" color="danger" >
+                      Reset
+                    </Button>
+                  </Flex>
+              </>
+            }
+          >
+            <Button onClick={() => setPopover(!popover)} variant="outlined" color="primary" >
+              Filter Tanggal
+            </Button>
+          </Popover>
           <Select
             placeholder="Sumber"
             style={{ width: 180 }}

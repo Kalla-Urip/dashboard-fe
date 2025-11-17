@@ -1,6 +1,12 @@
 import axiosInstance from "../utils/axios"
 
 export const tradeInService = {
+  getStatistic: async (params = {}) => {
+    const response = await axiosInstance.get('/trade/statistic', {
+      params,
+    })
+    return response.data
+  },
   getAssignData: async (params = {}) => {
     const response = await axiosInstance.get('/trade/need-assign-data', {
       params,

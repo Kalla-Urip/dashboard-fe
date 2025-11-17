@@ -471,8 +471,8 @@ export default function WorkshopMonitorIndex(){
           <Form.Item name={'status'} label="Status Kendaraan" >
             <Select
               options={[
-                'Booking Service',
-                'Konfirmasi Booking Service',
+                // 'Booking Service',
+                // 'Konfirmasi Booking Service',
                 'Penerimaan Service',
                 'Proses Service',
                 'Mobil Dicuci',
