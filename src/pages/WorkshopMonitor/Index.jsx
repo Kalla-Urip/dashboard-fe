@@ -8,7 +8,6 @@ import { serviceDataService } from "../../services/serviceData.service";
 import { useTableHeight } from "../../hooks/useTableHeight";
 import { stallService } from "../../services/stall.service";
 import { userService } from "../../services/user.service";
-import { format } from "date-fns";
 
 export default function WorkshopMonitorIndex(){
 
@@ -16,6 +15,7 @@ export default function WorkshopMonitorIndex(){
   const queryClient = useQueryClient()
 
   const [messageApi, contextHolder] = message.useMessage()
+  const [modalApi, modalHolder] = Modal.useModal()
 
   const [excelUpload, setExcelUpload] = useState([])
   const [vehicleStatus, setVehicleStatus] = useState({
@@ -116,6 +116,19 @@ export default function WorkshopMonitorIndex(){
     }
   })
 
+  const deleteMutation = useMutation({
+    mutationFn: (val) => serviceDataService.delete(val),
+    onSuccess: () => {
+      messageApi.success("Data berhasil dihapus")
+      queryClient.invalidateQueries('service-data')
+      setLoadingId(null)
+    },
+    onError: ({ response }) => {
+      const { data } = response
+      messageApi.error(data.message || "Terjadi Kesalahan")
+    }
+  })
+
   const handleChangeStall = (id, value) => {
     setLoadingId(id)
     changeMutation.mutate({ id, StallId: value ? value : null })
@@ -183,8 +196,18 @@ export default function WorkshopMonitorIndex(){
     statusForm.resetFields()
   }
 
+  const handleDelete = record => {
+    modalApi.confirm({
+      title: "Pemberitahuan",
+      content: `Yakin ingin menghapus data WAC dengan nomor plat ${record.plateNumber} ? `,
+      centered: true,
+      onOk: () => deleteMutation.mutate(record.id)
+    })
+  }
+
   return (
     <>
+      {modalHolder}
       {contextHolder}
       <Card>
         <Flex gap={20} style={{ marginBottom: 20 }} >
@@ -379,7 +402,7 @@ export default function WorkshopMonitorIndex(){
             {
               className: 'last-cell-p',
               title: 'Aksi',
-              width: 145,
+              width: 185,
               fixed: 'right',
               render: (record) => (
                 <Flex gap={10} >
@@ -393,6 +416,17 @@ export default function WorkshopMonitorIndex(){
                     icon={
                       <Icon
                         icon={'solar:clipboard-list-bold-duotone'}
+                        width={18}
+                      />
+                    }
+                  />
+                  <Button
+                    variant="outlined"
+                    color="danger"
+                    onClick={() => handleDelete(record)}
+                    icon={
+                      <Icon
+                        icon={'solar:trash-bin-trash-bold-duotone'}
                         width={18}
                       />
                     }

@@ -12,6 +12,7 @@ import { ResponsivePie } from "@nivo/pie";
 import SalesTradeInChart from "../../../components/charts/SalesTradeInChart";
 import UATradeInChart from "../../../components/charts/UATradeInChart copy";
 import SourceTradeInChart from "../../../components/charts/SourceTradeInChart";
+import { downloadBlob } from "../../../utils/download copy";
 
 const colorMap = { 'A': 'green', 'B': 'geekblue', 'C': 'orange', 'D': 'red' }
 
@@ -117,6 +118,14 @@ export function KacabUI(){
     onError: () => {
       messageApi.error("Terjadi Kesalahan")
     },
+  })
+
+  const exportMutation = useMutation({
+    mutationFn: (val) => tradeInService.exportAllData(val),
+    onSuccess: ({ blob, filename }) => {
+      downloadBlob(blob, filename)
+      messageApi.success("Data berhasil diexport")
+    }
   })
 
   const pagination = tradeInData?.pagination || { total: 0, page: 1 };
@@ -276,6 +285,9 @@ export function KacabUI(){
             allowClear
             onChange={(e) => setSource(e)}
           />
+          <Button onClick={() => exportMutation.mutate({...dataParams, ...dateFilter })} variant="solid" color="primary" >
+            Export
+          </Button>
         </Flex>
         <Table
           bordered

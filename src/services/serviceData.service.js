@@ -33,4 +33,8 @@ export const serviceDataService = {
     const response = await axiosInstance.postForm('/service-data/import', { file })
     return response.data
   },
+  delete: async (id) => {
+    const response = await axiosInstance.delete(`/service-data/${id}`)
+    return response.data
+  },
 }

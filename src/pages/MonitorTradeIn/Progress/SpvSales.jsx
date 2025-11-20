@@ -10,6 +10,7 @@ import { useTableHeight } from "../../../hooks/useTableHeight";
 import SourceTradeInChart from "../../../components/charts/SourceTradeInChart";
 import SalesTradeInChart from "../../../components/charts/SalesTradeInChart";
 import UATradeInChart from "../../../components/charts/UATradeInChart copy";
+import { downloadBlob } from "../../../utils/download copy";
 
 const renderBadge = status => {
 
@@ -129,6 +130,14 @@ export function SpvSalesUI(){
     queryClient.invalidateQueries('service-data')
     setPopover(false)
   }
+
+  const exportMutation = useMutation({
+    mutationFn: (val) => tradeInService.exportAllData(val),
+    onSuccess: ({ blob, filename }) => {
+      downloadBlob(blob, filename)
+      messageApi.success("Data berhasil diexport")
+    }
+  })
 
 
   return (
@@ -267,6 +276,9 @@ export function SpvSalesUI(){
             allowClear
             onChange={(e) => setSource(e)}
           />
+          <Button onClick={() => exportMutation.mutate({...dataParams, ...dateFilter })} variant="solid" color="primary" >
+            Export
+          </Button>
         </Flex>
         <Table
           bordered

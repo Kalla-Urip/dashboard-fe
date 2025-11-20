@@ -1,4 +1,5 @@
 import axiosInstance from "../utils/axios"
+import { parseFilenameFromDisposition } from "../utils/download copy"
 
 export const tradeInService = {
   getStatistic: async (params = {}) => {
@@ -78,5 +79,14 @@ export const tradeInService = {
   delete: async (id) => {
     const response = await axiosInstance.delete(`/trade/${id}`)
     return response.data
+  },
+  exportAllData: async (params = {}) => {
+    const response = await axiosInstance.get(`/trade/export`, { 
+      params,
+      responseType: 'blob'
+    })
+    const disposition = response.headers["content-disposition"];
+    const filename = parseFilenameFromDisposition(disposition) || "report.xlsx";
+    return { blob: response.data, filename };
   },
 }
